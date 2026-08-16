@@ -11,7 +11,7 @@ export function SectionHeading({
   aside?: ReactNode;
 }) {
   return (
-    <div className="mb-8 flex items-end justify-between gap-4 border-b border-hairline pb-4">
+    <div className="mb-8 flex items-end justify-between gap-4 border-b border-line pb-4">
       <div className="flex items-baseline gap-3">
         <span className="label-mono text-steel-dim">{index}</span>
         <h2 className="text-stretch font-display text-2xl font-semibold text-ink md:text-3xl">

@@ -6,7 +6,7 @@ export function ChecklistGroup({
   items: string[];
 }) {
   return (
-    <div>
+    <div className="shadow-card rounded-2xl bg-surface p-6">
       <h3 className="label-mono mb-4 text-steel">{title}</h3>
       <ul className="space-y-3.5">
         {items.map((item, i) => (

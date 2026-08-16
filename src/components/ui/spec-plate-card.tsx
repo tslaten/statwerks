@@ -37,7 +37,7 @@ export function SpecPlateCard({
   return (
     <Link
       href={href}
-      className="group relative block border border-hairline bg-raised p-6 transition-colors hover:border-hairline-strong hover:bg-[#1f2226]"
+      className="shadow-card hover:shadow-card-hover group relative block rounded-2xl bg-surface p-6 transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5"
     >
       {draft ? (
         <span className="label-mono absolute right-6 top-6 text-watch">
@@ -57,7 +57,7 @@ export function SpecPlateCard({
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-steel">{teaser}</p>
       {extra}
-      <div className="mt-6 flex items-center justify-between border-t border-hairline pt-4">
+      <div className="mt-6 flex items-center justify-between border-t border-line/70 pt-4">
         <div className="flex items-center gap-4">
           {severityCounts.map(({ severity, count }) => (
             <span

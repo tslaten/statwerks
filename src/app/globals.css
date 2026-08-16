@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — graphite scale, darkest to lightest */
-  --graphite: #15171a;  /* page background */
-  --raised: #1b1e22;    /* cards / panels */
-  --inset: #101214;     /* recessed readouts, code-like blocks */
-  --hairline: #2a2d32;  /* borders / dividers */
-  --hairline-strong: #383c42;
+  /* Surfaces — warm, light, grainy canvas with pure-white cards resting on it */
+  --canvas: #eae7e1;         /* page background (grain applied via body) */
+  --surface: #ffffff;        /* cards / panels */
+  --surface-recessed: #f3f1ec; /* recessed sub-panels inside a card, spec readouts */
+  --line: #e3e0d8;           /* borders / dividers on white */
+  --line-strong: #cfcbc0;
 
   /* Text */
-  --ink: #edeae4;       /* primary text, warm off-white */
-  --steel: #8b8d92;     /* secondary text */
-  --steel-dim: #818389; /* tertiary / captions — kept ≥4.5:1 on graphite/inset */
+  --ink: #1a1917;       /* primary text, warm near-black */
+  --steel: #5c5954;     /* secondary text */
+  --steel-dim: #68655e; /* tertiary / captions — kept ≥4.5:1 on canvas/surface-recessed */
 
-  /* Signal colors — severity + data */
-  --critical: #e8590c;
-  --watch: #5586af;
-  --clear: #4c9a63;
+  /* Signal colors — severity + data. Darker than a dark-theme palette would
+     use, since these sit on white/light surfaces and still need ≥4.5:1. */
+  --critical: #a83f0c;
+  --watch: #3d6a8f;
+  --clear: #337045;
 
   --font-archivo: "Archivo", "Archivo Fallback", sans-serif;
   --font-inter: "Inter", "Inter Fallback", sans-serif;
@@ -24,11 +25,11 @@
 }
 
 @theme inline {
-  --color-graphite: var(--graphite);
-  --color-raised: var(--raised);
-  --color-inset: var(--inset);
-  --color-hairline: var(--hairline);
-  --color-hairline-strong: var(--hairline-strong);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-recessed: var(--surface-recessed);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
 
   --color-ink: var(--ink);
   --color-steel: var(--steel);
@@ -45,7 +46,11 @@
 
 @layer base {
   body {
-    background: var(--graphite);
+    background-color: var(--canvas);
+    /* Fine film-grain noise (SVG feTurbulence), baked to a low-alpha black
+       so it reads as texture on the canvas, not as a visible pattern. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
     color: var(--ink);
   }
 }
@@ -66,11 +71,16 @@
   text-transform: uppercase;
 }
 
-@utility bg-grain {
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in oklab, var(--ink) 6%, transparent) 1px,
-    transparent 0
-  );
-  background-size: 3px 3px;
+/* Soft ambient shadow for white cards resting on the grainy canvas —
+   two layers: a tight contact shadow plus a wider diffuse one. */
+@utility shadow-card {
+  box-shadow:
+    0 1px 2px color-mix(in oklab, black 6%, transparent),
+    0 12px 28px -8px color-mix(in oklab, black 12%, transparent);
+}
+
+@utility shadow-card-hover {
+  box-shadow:
+    0 2px 4px color-mix(in oklab, black 7%, transparent),
+    0 18px 36px -8px color-mix(in oklab, black 16%, transparent);
 }

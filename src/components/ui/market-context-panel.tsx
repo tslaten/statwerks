@@ -3,8 +3,8 @@ import { formatMonthYear, formatUSD } from "@/lib/format";
 
 export function MarketContextPanel({ context }: { context: MarketContext }) {
   return (
-    <div className="grid gap-6 md:grid-cols-[15rem_1fr] md:gap-10">
-      <div className="rounded-sm border border-hairline bg-inset px-6 py-6">
+    <div className="shadow-card grid gap-6 rounded-2xl bg-surface p-6 md:grid-cols-[15rem_1fr] md:gap-10 md:p-7">
+      <div className="rounded-xl bg-surface-recessed px-6 py-6">
         <div className="label-mono text-steel-dim">Typical asking price</div>
         <div className="mt-2 font-mono text-2xl leading-tight text-ink md:text-[1.75rem]">
           {formatUSD(context.priceLow)}

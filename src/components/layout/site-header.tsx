@@ -3,7 +3,7 @@ import { Container } from "./container";
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-hairline">
+    <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur-sm">
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="/"

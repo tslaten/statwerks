@@ -5,7 +5,7 @@ export function KnownIssueRow({ issue }: { issue: KnownIssue }) {
   return (
     <article
       id={issue.id}
-      className="grid grid-cols-1 gap-4 border-b border-hairline py-7 first:pt-0 last:border-b-0 last:pb-0 md:grid-cols-[9rem_1fr]"
+      className="shadow-card grid grid-cols-1 gap-4 rounded-2xl bg-surface p-6 md:grid-cols-[9rem_1fr] md:p-7"
     >
       <div className="flex items-start md:justify-start">
         <SeverityTag severity={issue.severity} />
@@ -21,7 +21,7 @@ export function KnownIssueRow({ issue }: { issue: KnownIssue }) {
           {issue.detail}
         </p>
         {issue.whatToCheck.length > 0 ? (
-          <div className="mt-4 rounded-sm border border-hairline bg-inset p-4">
+          <div className="mt-4 rounded-xl bg-surface-recessed p-4">
             <h4 className="label-mono mb-3 text-steel-dim">
               What to check
             </h4>

@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="border-b border-hairline">
+      <section>
         <Container className="pb-16 pt-20 md:pb-24 md:pt-28">
           <p className="label-mono text-watch">
             Free · No login · Model-specific
@@ -25,7 +25,7 @@ export default function Home() {
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               href="/models"
-              className="label-mono inline-flex items-center gap-2 bg-ink px-5 py-3 text-graphite transition-opacity hover:opacity-85"
+              className="label-mono inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-canvas transition-opacity hover:opacity-85"
             >
               Browse model dashboards →
             </Link>
@@ -33,8 +33,8 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="border-b border-hairline bg-inset">
-        <Container className="grid grid-cols-1 divide-y divide-hairline sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      <section className="border-y border-line bg-surface">
+        <Container className="grid grid-cols-1 divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {[
             { value: String(platforms.length).padStart(2, "0"), label: "Model dashboards live" },
             { value: "$0", label: "Cost to read one" },
@@ -50,7 +50,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="border-b border-hairline">
+      <section>
         <Container className="py-16 md:py-20">
           <p className="label-mono text-steel-dim">How it works</p>
           <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">

@@ -59,7 +59,7 @@ export default async function TrimPage({
     <>
       {isDraft ? <DraftBanner /> : null}
 
-      <header className="border-b border-hairline">
+      <header>
         <Container className="pb-10 pt-12 md:pt-16">
           <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
             <Link href="/models" className="transition-colors hover:text-ink">
@@ -93,19 +93,19 @@ export default async function TrimPage({
           </p>
         </Container>
 
-        <Container>
+        <Container className="pb-10">
           <SpecStrip facts={quickFacts} />
         </Container>
       </header>
 
-      <Container className="py-14 md:py-20">
+      <Container className="pb-14 pt-4 md:pb-20">
         <section aria-labelledby="known-issues">
           <SectionHeading
             index="01"
             title="Known issues"
             aside={`${issues.length} flagged · ${criticalCount} critical`}
           />
-          <div>
+          <div className="space-y-4">
             {issues.map((issue) => (
               <KnownIssueRow key={issue.id} issue={issue} />
             ))}

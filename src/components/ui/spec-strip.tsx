@@ -1,9 +1,9 @@
 import type { QuickFact } from "@/data/models";
 
-/** Horizontal data readout — mimics a spec-plate / build-sheet strip. */
+/** Horizontal data readout — a white spec-plate card resting on the canvas. */
 export function SpecStrip({ facts }: { facts: QuickFact[] }) {
   return (
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-6 border-y border-hairline bg-inset px-6 py-6 sm:grid-cols-3 md:flex md:flex-wrap md:gap-0 md:divide-x md:divide-hairline md:px-0">
+    <dl className="shadow-card grid grid-cols-2 gap-x-6 gap-y-6 rounded-2xl bg-surface px-6 py-6 sm:grid-cols-3 md:flex md:flex-wrap md:gap-0 md:divide-x md:divide-line md:px-8">
       {facts.map((fact) => (
         <div key={fact.label} className="md:px-6 md:first:pl-0 md:last:pr-0">
           <dt className="label-mono text-steel-dim">{fact.label}</dt>

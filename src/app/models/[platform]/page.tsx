@@ -47,7 +47,7 @@ export default async function PlatformPage({
     <>
       {platform.contentStatus === "placeholder" ? <DraftBanner /> : null}
 
-      <header className="border-b border-hairline">
+      <header>
         <Container className="pb-10 pt-12 md:pt-16">
           <nav className="label-mono flex items-center gap-2 text-steel-dim">
             <Link href="/models" className="transition-colors hover:text-ink">
@@ -74,12 +74,12 @@ export default async function PlatformPage({
           </p>
         </Container>
 
-        <Container>
+        <Container className="pb-10">
           <SpecStrip facts={platform.overview.quickFacts} />
         </Container>
       </header>
 
-      <Container className="py-14 md:py-20">
+      <Container className="pb-14 pt-4 md:pb-20">
         <section aria-labelledby="trims">
           <SectionHeading
             index="01"
@@ -105,7 +105,7 @@ export default async function PlatformPage({
               own dashboard adds anything specific to that engine/spec
               variant.
             </p>
-            <div>
+            <div className="space-y-4">
               {sharedIssues.map((issue) => (
                 <KnownIssueRow key={issue.id} issue={issue} />
               ))}
