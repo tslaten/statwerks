@@ -3,7 +3,7 @@ import { Container } from "./container";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur-sm">
+    <header className="glass sticky top-0 z-40 border-b border-line">
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="/"

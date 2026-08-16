@@ -7,7 +7,9 @@ import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { countBySeverity } from "@/components/ui/spec-plate-card";
 import { SpecStrip } from "@/components/ui/spec-strip";
+import { SeverityMixBar } from "@/components/ui/severity-mix-bar";
 import {
   getAllPlatformTrimParams,
   getPlatformBySlug,
@@ -50,6 +52,7 @@ export default async function TrimPage({
 
   const issues = mergedKnownIssues(platform, trim);
   const quickFacts = mergedQuickFacts(platform, trim);
+  const severityCounts = countBySeverity(issues);
   const criticalCount = issues.filter((i) => i.severity === "critical").length;
   const isDraft =
     platform.contentStatus === "placeholder" ||
@@ -60,7 +63,7 @@ export default async function TrimPage({
       {isDraft ? <DraftBanner /> : null}
 
       <header>
-        <Container className="pb-10 pt-12 md:pt-16">
+        <Container wide className="pb-10 pt-12 md:pt-16">
           <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
             <Link href="/models" className="transition-colors hover:text-ink">
               Models
@@ -92,48 +95,65 @@ export default async function TrimPage({
             {trim.overview.summary ?? platform.overview.summary}
           </p>
         </Container>
-
-        <Container className="pb-10">
-          <SpecStrip facts={quickFacts} />
-        </Container>
       </header>
 
-      <Container className="pb-14 pt-4 md:pb-20">
-        <section aria-labelledby="known-issues">
-          <SectionHeading
-            index="01"
-            title="Known issues"
-            aside={`${issues.length} flagged · ${criticalCount} critical`}
-          />
-          <div className="space-y-4">
-            {issues.map((issue) => (
-              <KnownIssueRow key={issue.id} issue={issue} />
-            ))}
-          </div>
-        </section>
+      <Container wide className="pb-14 pt-4 md:pb-20">
+        <div className="lg:flex lg:items-start lg:gap-10">
+          {/* Sidebar — "at a glance" specs + severity mix, sticky on desktop.
+              Rendered first so mobile sees it before the long issue list. */}
+          <aside className="mb-10 lg:order-2 lg:mb-0 lg:sticky lg:top-24 lg:w-72 lg:shrink-0">
+            <p className="label-mono text-steel-dim">At a glance</p>
+            <div className="mt-4">
+              <SpecStrip facts={quickFacts} />
+            </div>
+            <div className="shadow-card mt-3 rounded-xl bg-surface px-4 py-4">
+              <p className="label-mono mb-3 text-steel-dim">
+                Known-issue mix
+              </p>
+              <SeverityMixBar counts={severityCounts} />
+            </div>
+          </aside>
 
-        <section aria-labelledby="market-context" className="mt-16 md:mt-20">
-          <SectionHeading index="02" title="Market pricing context" />
-          <MarketContextPanel context={trim.marketContext} />
-        </section>
+          <div className="lg:order-1 lg:min-w-0 lg:flex-1">
+            <section aria-labelledby="known-issues">
+              <SectionHeading
+                index="01"
+                title="Known issues"
+                aside={`${issues.length} flagged · ${criticalCount} critical`}
+              />
+              <div className="max-w-3xl space-y-4">
+                {issues.map((issue) => (
+                  <KnownIssueRow key={issue.id} issue={issue} />
+                ))}
+              </div>
+            </section>
 
-        <section aria-labelledby="checklist" className="mt-16 md:mt-20">
-          <SectionHeading index="03" title="Buying checklist" />
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
-            <ChecklistGroup
-              title="Documents to request"
-              items={platform.checklist.documentsToRequest}
-            />
-            <ChecklistGroup
-              title="Questions for the seller"
-              items={platform.checklist.questionsForSeller}
-            />
-            <ChecklistGroup
-              title="PPI advice"
-              items={platform.checklist.ppiAdvice}
-            />
+            <section aria-labelledby="market-context" className="mt-16 md:mt-20">
+              <SectionHeading index="02" title="Market pricing context" />
+              <div className="max-w-3xl">
+                <MarketContextPanel context={trim.marketContext} />
+              </div>
+            </section>
+
+            <section aria-labelledby="checklist" className="mt-16 md:mt-20">
+              <SectionHeading index="03" title="Buying checklist" />
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                <ChecklistGroup
+                  title="Documents to request"
+                  items={platform.checklist.documentsToRequest}
+                />
+                <ChecklistGroup
+                  title="Questions for the seller"
+                  items={platform.checklist.questionsForSeller}
+                />
+                <ChecklistGroup
+                  title="PPI advice"
+                  items={platform.checklist.ppiAdvice}
+                />
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
       </Container>
     </>
   );

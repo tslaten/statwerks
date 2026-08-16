@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — warm, light, grainy canvas with pure-white cards resting on it */
-  --canvas: #eae7e1;         /* page background (grain applied via body) */
+  /* Surfaces — warm, light, grainy canvas with pure-white cards resting on it.
+     Kept close to white — cards separate mostly via shadow, not color delta. */
+  --canvas: #f5f3ee;         /* page background (grain applied via body) */
   --surface: #ffffff;        /* cards / panels */
-  --surface-recessed: #f3f1ec; /* recessed sub-panels inside a card, spec readouts */
-  --line: #e3e0d8;           /* borders / dividers on white */
-  --line-strong: #cfcbc0;
+  --surface-recessed: #f1efe8; /* recessed sub-panels inside a card, spec readouts */
+  --line: #ece9e1;           /* borders / dividers on white */
+  --line-strong: #d9d5c9;
 
   /* Text */
   --ink: #1a1917;       /* primary text, warm near-black */
@@ -49,7 +50,7 @@
     background-color: var(--canvas);
     /* Fine film-grain noise (SVG feTurbulence), baked to a low-alpha black
        so it reads as texture on the canvas, not as a visible pattern. */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     color: var(--ink);
   }
@@ -83,4 +84,14 @@
   box-shadow:
     0 2px 4px color-mix(in oklab, black 7%, transparent),
     0 18px 36px -8px color-mix(in oklab, black 16%, transparent);
+}
+
+/* Glassmorphism — for elements that float over other content while it
+   scrolls underneath: sticky nav, sticky notice bars, and (later)
+   tooltips/drawers/modals. Not for cards resting flat on the canvas —
+   there's nothing meaningful behind them to blur. */
+@utility glass {
+  background-color: color-mix(in oklab, var(--surface) 72%, transparent);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
 }

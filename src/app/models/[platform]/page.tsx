@@ -48,7 +48,7 @@ export default async function PlatformPage({
       {platform.contentStatus === "placeholder" ? <DraftBanner /> : null}
 
       <header>
-        <Container className="pb-10 pt-12 md:pt-16">
+        <Container wide className="pb-10 pt-12 md:pt-16">
           <nav className="label-mono flex items-center gap-2 text-steel-dim">
             <Link href="/models" className="transition-colors hover:text-ink">
               Models
@@ -74,19 +74,19 @@ export default async function PlatformPage({
           </p>
         </Container>
 
-        <Container className="pb-10">
+        <Container wide className="pb-10">
           <SpecStrip facts={platform.overview.quickFacts} />
         </Container>
       </header>
 
-      <Container className="pb-14 pt-4 md:pb-20">
+      <Container wide className="pb-14 pt-4 md:pb-20">
         <section aria-labelledby="trims">
           <SectionHeading
             index="01"
             title="Choose a trim"
             aside={`${trims.length} trim${trims.length === 1 ? "" : "s"}`}
           />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {trims.map((trim) => (
               <TrimCard key={trim.slug} platform={platform} trim={trim} />
             ))}
@@ -105,7 +105,7 @@ export default async function PlatformPage({
               own dashboard adds anything specific to that engine/spec
               variant.
             </p>
-            <div className="space-y-4">
+            <div className="max-w-3xl space-y-4">
               {sharedIssues.map((issue) => (
                 <KnownIssueRow key={issue.id} issue={issue} />
               ))}
