@@ -1,12 +1,10 @@
 import type { Platform } from "../types";
 
 /**
- * Reviewed research, August 2026. Sources consulted: LN Engineering
- * bore-scoring technical notes, Rennlist/PistonHeads/Planet-9 owner
- * threads, Design911 and pcarwise 981 buying guides, and Pelican Parts'
- * 981 coolant-system catalog notes. Cross-checked across multiple
- * independent sources before inclusion — see git history/PR discussion
- * for links. Treat as a living document: update as better data arrives.
+ * Reviewed research, August 2026. Curated content supplied directly by
+ * the site owner (public sale/owner-forum aggregation), incorporated
+ * verbatim where possible. Supersedes an earlier auto-researched pass —
+ * see PR/commit history for what changed and why.
  */
 export const cayman981: Platform = {
   slug: "981-cayman",
@@ -22,7 +20,7 @@ export const cayman981: Platform = {
     layout: "Mid-engine, rear-wheel drive",
     body: "2dr coupe",
     summary:
-      "The 981 replaced the 987.2 in 2012 with a stiffer, mostly-aluminum unibody, a wider track, and electric power steering — the last Cayman generation to keep a naturally-aspirated flat-six before the 718 moved to turbocharged flat-fours in 2016. It's widely considered the sweet spot for chassis feel in the model line: heavier and more planted than the 987, more analog and better-sounding than the 718 that replaced it. Every 981 Cayman shares the same coolant system, PASM hardware, and clutch/flywheel wear pattern regardless of trim — engine-specific items like bore scoring live on each trim's own page.",
+      "Launched in Europe in late 2013 (U.S. model years run 2014–2016), the 981 was a meaningful step up from the 987 in chassis stiffness, styling, and interior quality — the first Cayman generation with styling distinct from its Boxster sibling, even though the two share the same platform. It's widely regarded by the enthusiast community as one of the best-driving Caymans, with generally strong reliability by Porsche standards, before giving way to the turbocharged 718 Cayman (982) in 2017. Every 981 Cayman shares the same platform-wide wear items below regardless of trim — engine-specific detail lives on each trim's own page.",
     quickFacts: [
       { label: "Production", value: "2012–2016" },
       { label: "Chassis code", value: "981" },
@@ -32,109 +30,119 @@ export const cayman981: Platform = {
 
   sharedKnownIssues: [
     {
-      id: "hpfp-failure",
-      title: "High-pressure fuel pump (HPFP) failure",
-      severity: "watch",
+      id: "bonnet-catch-recall",
+      title: "Front bonnet (frunk) catch recall — narrow build window",
+      severity: "critical",
       summary:
-        "A documented failure point on the direct-injection MA1 engine family used across the 981 lineup — not universal, but common enough to budget for on a higher-mileage car.",
+        "Cars built May 5 – June 6, 2014 may have a front bonnet (frunk) catch that can fail and allow the hood to open at speed — a safety recall, not a cosmetic issue.",
       detail:
-        "The HPFP pressurizes fuel for direct injection and tends to fail in the 100,000–120,000-mile range, though it can happen earlier. Symptoms range from a hard/weak start requiring multiple crank attempts to a sudden power drop and misfire codes under load. It most often throws a P0087 (low fuel rail pressure) code, but early on it can present with no fuel-specific code at all — sellers or shops may mistake it for a battery or starter issue. A new OEM pump runs roughly $1,500–$2,800 before labor; quality remanufactured units are available for less.",
+        "A narrow production window — May 5 to June 6, 2014 — is affected by a bonnet catch that can fail, allowing the front trunk lid to open unexpectedly at speed. If a car's build date falls in this window, confirm recall completion via VIN with a Porsche dealer before you rely on anything else about the car. This is a safety recall, not a wear item, and should be resolved (or clearly priced in) regardless of how clean the car is otherwise.",
       whatToCheck: [
-        "Ask whether the car has ever been hard to start, especially cold, or needed multiple crank attempts",
-        "Ask about any sudden power loss or misfire around 4,000 rpm under load",
-        "Have the PPI shop scan for stored and pending codes, specifically P0087 and low fuel-rail-pressure faults",
+        "Check the car's build date (not just model year) against the May 5 – June 6, 2014 window",
+        "If in that window, run the VIN through a Porsche dealer or Porsche's recall lookup to confirm the recall has been completed",
+        "Don't take a seller's word for it — get documented confirmation of recall completion",
       ],
     },
     {
-      id: "coolant-lines",
-      title: "Coolant pipes & reservoir aging",
+      id: "padm-mount-failure",
+      title: "PADM (Porsche Active Drivetrain Mounts) failure",
       severity: "watch",
       summary:
-        "The front coolant pipes transition between rubber, plastic, and metal sections, and those joints — plus the plastic expansion tank — are a known age-related weak point regardless of mileage.",
+        "Electronically controlled engine mounts on cars so equipped commonly fail over time — a fault-code check and connector inspection during PPI can save you from paying for a mount you don't need.",
       detail:
-        "Leaks typically show up as coolant staining or a faint sweet smell, often traced to a pipe joint near the front wheel wells or the plastic coolant reservoir, which can develop a hairline crack that grows into a sudden split. A slow leak is a minor repair; a car that's been driven with low coolant and no warning is the expensive outcome — check for a stored overheating or coolant-level fault even if the dash is currently clear.",
+        "PADM electronically varies engine mount stiffness — firm under load, soft at idle — on cars optioned with the feature. These mounts commonly fail with age. Before assuming a full mount replacement is needed, verify the wiring and connector first, since a bad connector can produce symptoms that mimic mount failure at a fraction of the repair cost.",
       whatToCheck: [
-        "Inspect visible coolant pipes near the front wheel wells for staining, crustiness, or previous repairs",
-        "Check the coolant reservoir for hairline cracks and confirm fluid level and color",
-        "Ask if the car has ever shown a low-coolant or overheating warning",
+        "Confirm whether the car is actually equipped with PADM before pricing this in",
+        "Check for PADM-related fault codes during PPI",
+        "Verify wiring and connector condition before accepting a quote for mount replacement",
       ],
     },
     {
-      id: "pasm-suspension",
-      title: "PASM faults & suspension top-mount wear (if equipped)",
+      id: "ac-condenser-corrosion",
+      title: "A/C condenser corrosion from debris buildup",
       severity: "watch",
       summary:
-        "PASM (Porsche Active Suspension Management) is generally reliable, but water can get into its connectors and trigger intermittent fault messages; separately, suspension top mounts and bushings age out on higher-mileage cars.",
+        "Leaves and road debris can pack into the lower corner of the A/C condensers, trapping moisture that corrodes the aluminum until a leak develops — more common on cars from leafy or wet climates.",
       detail:
-        "An intermittent PASM warning light is more often a corroded or water-intruded connector than a failed damper — worth ruling out before paying for shocks. Genuinely worn top mounts or bushings show up as a knock or thud from the rear over bumps, distinct from a PASM fault. Both are corner-by-corner repairs, not full-suspension jobs, but PASM dampers themselves aren't cheap if one has actually failed.",
+        "Debris collects in the lower corners of the condenser cores and holds moisture against the aluminum fins, slowly corroding them until a refrigerant leak develops. It's climate- and parking-dependent rather than universal, but worth a visual check during PPI regardless, since a failed condenser is a real if not huge repair.",
       whatToCheck: [
-        "Check for a PASM warning light on startup and ask if it's ever appeared intermittently",
-        "Listen for a knock or thud from the rear suspension over bumps or speed humps",
-        "Inspect shock bodies for visible fluid seepage, and top mounts/bushings for visible wear",
+        "Visually inspect the A/C condenser's lower corners for corrosion or leaf/debris buildup during PPI",
+        "Confirm the A/C blows cold during the test drive",
+        "Ask where the car has typically been parked or driven — leafy or coastal climates raise the risk",
       ],
     },
     {
-      id: "engine-mounts",
-      title: "Dynamic engine mount wear (Sport Chrono cars)",
+      id: "electrical-gremlins-general",
+      title: "Scattered electrical faults (fuel door actuator, PSM, infotainment)",
       severity: "watch",
       summary:
-        "Cars fitted with the Sport Chrono package get hydraulic dynamic engine mounts, which firm up under load and soften at idle — they wear out like any hydraulic mount, and they're not cheap to replace.",
+        "Owner reports include isolated issues like fuel door actuator failure, PSM system faults, and infotainment quirks — no single dominant failure pattern, mostly one-off gremlins rather than a systemic issue.",
       detail:
-        "Symptoms are a noticeable increase in idle vibration or drivetrain shunt on throttle tip-in as the mount loses its hydraulic damping. Because the mounts sit close to coolant hose routing on this generation, replacement labor runs longer than on older Caymans — factor that into any quote. Not every 981 has dynamic mounts; it depends on whether Sport Chrono was optioned, independent of trim.",
+        "These are best described as gremlins rather than a defect: isolated reports of fuel door actuator failure, PSM (Porsche Stability Management) faults, and infotainment quirks appear across the ownership base, but no single component stands out as a systemic weak point. Individually inexpensive to fix, but worth flushing out during a full electrical check rather than discovering them piecemeal after purchase.",
       whatToCheck: [
-        "Confirm whether the car has Sport Chrono (and therefore dynamic engine mounts) before pricing this in",
-        "Feel for excess idle vibration or a clunk on throttle tip-in/lift-off",
-        "Ask for engine mount replacement history if the car is higher-mileage",
+        "Run a full electrical function check during PPI: fuel door release, PSM on/off and warning lights, infotainment functions",
+        "Note any dash warning lights that appear and clear inconsistently",
       ],
     },
     {
-      id: "clutch-dmf",
-      title: "Clutch & dual-mass flywheel wear (manual cars)",
+      id: "blower-motor-stick",
+      title: "Blower motor sticks after periods of inactivity",
       severity: "watch",
       summary:
-        "A normal wear item on any manual 981, not a defect — but replacement is expensive enough that it belongs in the negotiation, not as a surprise after purchase.",
+        "Common after the car sits for a few weeks — the blower fails to spin on startup. Not a wear item worth negotiating hard on, but worth testing HVAC on any car that's been sitting.",
       detail:
-        "A rattle or clatter at idle in neutral, which quiets when the clutch pedal is pressed, is the classic sign of a worn dual-mass flywheel rather than the clutch disc itself. Expect a combined clutch and DMF job together, since replacing one without the other is false economy. Ask specifically for mileage at replacement if it's already been done once.",
+        "The blower motor can stick slightly after periods of inactivity and fail to spin when the HVAC is switched on. It's usually resolved by manually freeing the fan blades via the air filter box (ignition off) rather than a parts replacement, and isn't indicative of a deeper problem — just worth testing on any car that's been sitting for a while before you look at it.",
       whatToCheck: [
-        "Listen for a rattle at idle in neutral that quiets when the clutch pedal is pressed",
-        "Ask for clutch/DMF replacement history and mileage at replacement",
-        "Feel for a soft, high, or inconsistent clutch bite point during the test drive",
+        "Run the HVAC blower on all speeds during the test drive, especially if the car has been sitting",
+        "If it doesn't spin, ask about (or try) manually freeing the blades via the air filter box with the ignition off before assuming it needs replacement",
       ],
     },
     {
-      id: "di-carbon",
-      title: "Direct-injection intake valve carbon buildup",
+      id: "strut-mount-bushing",
+      title: "Front/rear strut mount bushing wear",
       severity: "clear",
       summary:
-        "An expected characteristic of direct injection generally — not unique to Porsche, not a defect — that shows up as a rough idle or hesitation if it's gone unaddressed for a long time.",
+        "Drying or failure of the rubber bushing above the strut can cause a low-frequency thump or knock over bumps, especially at the rear — a normal wear item, not a red flag.",
       detail:
-        "Because direct injection sprays fuel straight into the cylinder instead of over the intake valves, there's no fuel wash to keep carbon from building up on the valve backs over time. Left unchecked long enough it can cause a rough idle or a slight loss of low-end response; the fix is a walnut-blasting service, not an engine repair. This is a maintenance planning item to ask about, not a reason to walk away from an otherwise good car.",
+        "The rubber bushing above the strut dries out and fails with age and mileage, producing a low-frequency thump or knock over bumps that's most noticeable from the rear. Every car in this age bracket will eventually need this addressed — it isn't a sign of abuse — but it's worth budgeting for on a higher-mileage example rather than assuming it's included in the asking price.",
       whatToCheck: [
-        "Ask whether a valve-cleaning/walnut-blasting service has ever been performed, and at what mileage",
-        "Note idle smoothness and low-rpm response during the test drive as a rough proxy",
+        "Listen for a low-frequency thump or knock over bumps, especially from the rear",
+        "Ask whether strut/shock mounts have ever been replaced and at what mileage",
+      ],
+    },
+    {
+      id: "ims-bearing-not-applicable",
+      title: "IMS bearing — not applicable to this generation",
+      severity: "clear",
+      summary:
+        "The 981's direct-injection MA1-series engine has no intermediate shaft bearing — the IMS failure risk from earlier M96/M97 engines simply doesn't apply here.",
+      detail:
+        "IMS bearing failure is the defining ownership risk on 986/996 and 987.1/997.1-generation Porsches with M96/M97 engines, but the 981's direct-injection MA1-series engine doesn't have an intermediate shaft bearing at all — there's nothing here to fail in that way. Worth stating explicitly, since it's usually the first question buyers coming from an older 911 or Boxster/Cayman ask.",
+      whatToCheck: [
+        "None needed — if a seller or shop tries to sell you an \"IMS inspection\" on a 981, that's a red flag about them, not the car",
       ],
     },
   ],
 
   checklist: {
     documentsToRequest: [
-      "Full service history / dealer or independent-shop invoices",
-      "A DME (digital motor electronics) report on manual cars — it can show whether the engine has been over-revved",
-      "Records of any clutch/flywheel, coolant system, or engine mount work",
+      "Full service history — independent Porsche specialist or OPC (official Porsche Centre) records preferred over generic shop records",
+      "Recall completion confirmation (VIN-checked with a Porsche dealer) if the build date falls between May 5 – June 6, 2014",
       "Title history / accident or salvage check (Carfax or equivalent)",
     ],
     questionsForSeller: [
-      "Has the car ever thrown a check-engine or PASM warning light, and do you know which code?",
-      "Any history of hard/weak starts, sudden power loss, or misfires under load?",
-      "Any history of coolant loss, a coolant smell while driving, or an overheating warning?",
+      "Has the car ever had HVAC/blower issues, especially after sitting for a few weeks?",
+      "Is the car equipped with PADM, and has it ever thrown a related fault code?",
+      "Has the A/C system ever needed condenser or refrigerant work?",
+      "Any history of electrical faults — fuel door actuator, PSM warnings, infotainment glitches?",
       "Has a pre-purchase inspection ever been done, and can you share the results?",
     ],
     ppiAdvice: [
-      "Use a shop that specializes in Porsche or mid-engine sports cars, not a generic mechanic",
-      "Ask specifically for a borescope inspection of the cylinder bores, not just a visual under the hood",
-      "Get a compression and/or leak-down test on all six cylinders",
-      "Have the shop pull stored and pending fault codes, including fuel-rail-pressure codes",
-      "Budget for the PPI even on a car you're excited about — treat it as non-negotiable, not optional",
+      "Confirm bonnet catch recall completion via VIN if the build date falls between May 5 – June 6, 2014",
+      "Test blower motor / HVAC function on all speeds, especially if the car has been sitting",
+      "Check for PADM-related fault codes if the car is so equipped, and verify wiring/connectors before accepting a mount-replacement quote",
+      "Visually inspect A/C condenser corners for corrosion, especially on cars from leafy or wet climates",
+      "Run a full electrical function check: fuel door release, PSM, infotainment",
     ],
   },
 };

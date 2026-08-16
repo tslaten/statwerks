@@ -2,7 +2,14 @@ import { cayman981 } from "./platforms/981-cayman";
 import { carrera9971 } from "./platforms/997-1-carrera";
 import { cayman981S } from "./trims/981-cayman-s";
 import { carrera9971S } from "./trims/997-1-carrera-s";
-import { SEVERITY_ORDER, type KnownIssue, type Platform, type QuickFact, type Trim } from "./types";
+import {
+  SEVERITY_ORDER,
+  type BuyingChecklist,
+  type KnownIssue,
+  type Platform,
+  type QuickFact,
+  type Trim,
+} from "./types";
 
 export * from "./types";
 
@@ -48,4 +55,20 @@ export function mergedKnownIssues(platform: Platform, trim: Trim): KnownIssue[] 
 /** A trim's spec readout: platform-level facts followed by trim-level facts. */
 export function mergedQuickFacts(platform: Platform, trim: Trim): QuickFact[] {
   return [...platform.overview.quickFacts, ...trim.overview.quickFacts];
+}
+
+/** The platform's buying checklist plus any trim-specific additions. */
+export function mergedChecklist(platform: Platform, trim: Trim): BuyingChecklist {
+  const additions = trim.checklistAdditions ?? {};
+  return {
+    documentsToRequest: [
+      ...platform.checklist.documentsToRequest,
+      ...(additions.documentsToRequest ?? []),
+    ],
+    questionsForSeller: [
+      ...platform.checklist.questionsForSeller,
+      ...(additions.questionsForSeller ?? []),
+    ],
+    ppiAdvice: [...platform.checklist.ppiAdvice, ...(additions.ppiAdvice ?? [])],
+  };
 }

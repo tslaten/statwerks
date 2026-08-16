@@ -13,7 +13,8 @@ re-authoring shared platform content:
   Points back at its platform via `platformSlug`.
 
 A trim's full dashboard page merges its platform's shared data with its
-own — see `mergedKnownIssues` / `mergedQuickFacts` in `index.ts`.
+own — see `mergedKnownIssues` / `mergedQuickFacts` / `mergedChecklist`
+in `index.ts`.
 
 Route: `/models/[platformSlug]/[trimSlug]`, e.g. `/models/981-cayman/s`.
 `/models/[platformSlug]` on its own is a lightweight hub page: platform
@@ -64,8 +65,11 @@ This is the case the schema is built around — e.g. adding "GTS" to the
 - `marketContext` — trim-level only; pricing varies by trim, not by
   platform. Written copy, not live data — `asOf` is an ISO date shown
   next to the range so readers know how fresh the commentary is.
-- `checklist` — platform-level only (documents/questions/PPI advice are
-  generic across trims of a generation). Lives on `Platform`, not `Trim`.
+- `checklist` — lives on `Platform`; put documents/questions/PPI advice
+  here if they apply regardless of trim. A trim can add its own via
+  the optional `checklistAdditions` (e.g. "test PDK shift quality" only
+  makes sense on PDK-equipped trims) — `mergedChecklist()` combines the
+  two for display, platform items first.
 
 ## Later phases (don't build yet, just don't paint into a corner)
 

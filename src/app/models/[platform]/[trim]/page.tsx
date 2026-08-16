@@ -14,6 +14,7 @@ import {
   getAllPlatformTrimParams,
   getPlatformBySlug,
   getTrim,
+  mergedChecklist,
   mergedKnownIssues,
   mergedQuickFacts,
 } from "@/data/models";
@@ -52,6 +53,7 @@ export default async function TrimPage({
 
   const issues = mergedKnownIssues(platform, trim);
   const quickFacts = mergedQuickFacts(platform, trim);
+  const checklist = mergedChecklist(platform, trim);
   const severityCounts = countBySeverity(issues);
   const criticalCount = issues.filter((i) => i.severity === "critical").length;
   const isDraft =
@@ -140,16 +142,13 @@ export default async function TrimPage({
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <ChecklistGroup
                   title="Documents to request"
-                  items={platform.checklist.documentsToRequest}
+                  items={checklist.documentsToRequest}
                 />
                 <ChecklistGroup
                   title="Questions for the seller"
-                  items={platform.checklist.questionsForSeller}
+                  items={checklist.questionsForSeller}
                 />
-                <ChecklistGroup
-                  title="PPI advice"
-                  items={platform.checklist.ppiAdvice}
-                />
+                <ChecklistGroup title="PPI advice" items={checklist.ppiAdvice} />
               </div>
             </section>
           </div>

@@ -123,6 +123,13 @@ export interface Trim {
   /** Known issues specific to this trim, in addition to the platform's shared list. */
   knownIssues: KnownIssue[];
   marketContext: MarketContext;
+  /**
+   * Trim-specific additions to the platform's buying checklist — e.g. "test
+   * PDK shift quality" only matters on PDK-equipped trims. Optional: most
+   * checklist content belongs on the platform since it's trim-agnostic.
+   * Merged onto `Platform.checklist` via `mergedChecklist()` for display.
+   */
+  checklistAdditions?: Partial<BuyingChecklist>;
 }
 
 export const SEVERITY_LABEL: Record<Severity, string> = {
