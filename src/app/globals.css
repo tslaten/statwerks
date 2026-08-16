@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  /* Surfaces — graphite scale, darkest to lightest */
+  --graphite: #15171a;  /* page background */
+  --raised: #1b1e22;    /* cards / panels */
+  --inset: #101214;     /* recessed readouts, code-like blocks */
+  --hairline: #2a2d32;  /* borders / dividers */
+  --hairline-strong: #383c42;
+
+  /* Text */
+  --ink: #edeae4;       /* primary text, warm off-white */
+  --steel: #8b8d92;     /* secondary text */
+  --steel-dim: #818389; /* tertiary / captions — kept ≥4.5:1 on graphite/inset */
+
+  /* Signal colors — severity + data */
+  --critical: #e8590c;
+  --watch: #5586af;
+  --clear: #4c9a63;
+
+  --font-archivo: "Archivo", "Archivo Fallback", sans-serif;
+  --font-inter: "Inter", "Inter Fallback", sans-serif;
+  --font-plex-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
+}
+
+@theme inline {
+  --color-graphite: var(--graphite);
+  --color-raised: var(--raised);
+  --color-inset: var(--inset);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+
+  --color-ink: var(--ink);
+  --color-steel: var(--steel);
+  --color-steel-dim: var(--steel-dim);
+
+  --color-critical: var(--critical);
+  --color-watch: var(--watch);
+  --color-clear: var(--clear);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+}
+
+@layer base {
+  body {
+    background: var(--graphite);
+    color: var(--ink);
+  }
+}
+
+/* Condensed/expanded display type — Archivo is a variable font with a
+   width (wdth) axis. This utility dials it toward the expanded end for
+   the technical, "readout" display feel called for in the design brief. */
+@utility text-stretch {
+  font-stretch: 122%;
+}
+
+/* Thin, uppercase, tracked-out label — used for eyebrows and section
+   numbering, echoing spec-sheet / build-sheet typography. */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility bg-grain {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in oklab, var(--ink) 6%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 3px 3px;
+}
