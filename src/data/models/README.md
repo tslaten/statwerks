@@ -1,44 +1,76 @@
-# Adding a model
+# Adding a platform or trim
 
-Every model dashboard page (`/models/[slug]`) is rendered entirely from a
-data file in this directory — there's no per-model component code to touch.
+Model content is split into two tiers so a new trim doesn't mean
+re-authoring shared platform content:
 
-## Steps
+- **Platform** (`platforms/*.ts`) — one per generation/chassis, e.g.
+  "981 Cayman". Holds facts and known issues common to every trim of
+  that generation: production years, chassis code, layout, the shared
+  known-issues list, and the buying checklist.
+- **Trim** (`trims/*.ts`) — one per trim within a platform, e.g.
+  "Cayman S". Extends its platform with trim-specific specs (engine,
+  power, 0–60, weight), trim-specific known issues, and pricing.
+  Points back at its platform via `platformSlug`.
 
-1. Copy `981-cayman-s.ts` to a new file named after the slug, e.g.
-   `987-2-cayman-s.ts`.
-2. Fill in every field. The shape is defined and documented in `types.ts`
-   (`Model` interface) — your editor will flag anything missing.
-3. Set `contentStatus: "placeholder"` until the copy has been reviewed
-   against real research, then flip it to `"reviewed"`. Placeholder
-   models show a draft banner on their page; reviewed ones don't.
-4. Register the model in `index.ts`:
+A trim's full dashboard page merges its platform's shared data with its
+own — see `mergedKnownIssues` / `mergedQuickFacts` in `index.ts`.
+
+Route: `/models/[platformSlug]/[trimSlug]`, e.g. `/models/981-cayman/s`.
+`/models/[platformSlug]` on its own is a lightweight hub page: platform
+overview, shared known issues, and a card per trim.
+
+## Adding a new trim to an existing platform (the common case)
+
+This is the case the schema is built around — e.g. adding "GTS" to the
+981 Cayman platform.
+
+1. Copy `trims/981-cayman-s.ts` to a new file, e.g. `981-cayman-gts.ts`.
+2. Set `slug` (this becomes the URL, e.g. `"gts"`) and keep
+   `platformSlug: "981-cayman"` pointing at the existing platform.
+3. Fill in `overview` (trim-specific specs) and `knownIssues` (only
+   what's specific to this trim — shared platform issues don't need
+   repeating).
+4. Register it in `index.ts`:
    ```ts
-   import { yourNewModel } from "./987-2-cayman-s";
-   export const models: Model[] = [cayman981S, carrera9971S, yourNewModel];
+   import { cayman981Gts } from "./trims/981-cayman-gts";
+   export const trims: Trim[] = [cayman981S, carrera9971S, cayman981Gts];
    ```
-5. That's it — the model automatically appears on `/models` and at
-   `/models/<slug>`, including SEO metadata and static generation
-   (`generateStaticParams` reads from `getAllModels()`).
+5. Done. `/models/981-cayman` automatically shows a card for the new
+   trim, and `/models/981-cayman/gts` renders its full dashboard. The
+   `981-cayman.ts` platform file doesn't change at all.
+
+## Adding a new platform (a new generation)
+
+1. Copy `platforms/981-cayman.ts` to a new file, e.g. `987-2-cayman.ts`.
+2. Fill in every field — shape is documented in `types.ts` (`Platform`).
+3. Add at least one trim for it (see above), setting that trim's
+   `platformSlug` to match.
+4. Register both in `index.ts`.
 
 ## Field notes
 
-- `slug` — must be URL-safe and match the filename by convention (not
-  enforced, just tidy). This becomes the route: `/models/<slug>`.
-- `knownIssues[].severity` — one of `"critical" | "watch" | "clear"`.
-  These map directly to the orange/blue/green signal colors and drive
-  sort order on the page (critical first).
-- `marketContext` — written copy, not live data. `asOf` is an ISO date
-  shown next to the range so readers know how fresh the pricing
-  commentary is; update it whenever you revise the numbers.
-- `checklist` — three flat string arrays. Keep each line to roughly a
-  sentence; the UI renders them as inspection-style checklist rows, not
-  paragraphs.
+- `slug` (platform or trim) — must be URL-safe; the trim's URL is
+  `/models/<platformSlug>/<slug>`.
+- `contentStatus` — `"placeholder"` until copy is reviewed against real
+  research, then `"reviewed"`. A page shows a draft banner if *either*
+  its platform or its trim is still a placeholder.
+- `knownIssue.severity` — one of `"critical" | "watch" | "clear"`. Maps
+  directly to the orange/blue/green signal colors and drives sort order
+  (critical first) after platform + trim issues are merged.
+- Put an issue on the **platform** if it applies regardless of trim
+  (e.g. a coolant tank that ages out on every car of that generation).
+  Put it on the **trim** if it's specific to that engine/spec variant
+  (e.g. bore scoring reported on one displacement but not another).
+- `marketContext` — trim-level only; pricing varies by trim, not by
+  platform. Written copy, not live data — `asOf` is an ISO date shown
+  next to the range so readers know how fresh the commentary is.
+- `checklist` — platform-level only (documents/questions/PPI advice are
+  generic across trims of a generation). Lives on `Platform`, not `Trim`.
 
 ## Later phases (don't build yet, just don't paint into a corner)
 
 The schema intentionally doesn't reference VIN-specific data, payment
 status, or PPI-inspector referrals — those are later-phase features per
 the product brief. When they arrive, they should be addable as new
-top-level fields on `Model` (or a related type keyed by `slug` /
-`chassisCode`) without reshaping what's here.
+top-level fields on `Trim` (or a related type keyed by trim `slug` +
+`platformSlug`) without reshaping what's here.

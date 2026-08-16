@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
-import { ModelCard } from "@/components/ui/model-card";
-import { getAllModels } from "@/data/models";
+import { PlatformCard } from "@/components/ui/platform-card";
+import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
 
 export default function Home() {
-  const models = getAllModels();
+  const platforms = getAllPlatforms();
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function Home() {
       <section className="border-b border-hairline bg-inset">
         <Container className="grid grid-cols-1 divide-y divide-hairline sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {[
-            { value: String(models.length).padStart(2, "0"), label: "Model dashboards live" },
+            { value: String(platforms.length).padStart(2, "0"), label: "Model dashboards live" },
             { value: "$0", label: "Cost to read one" },
             { value: "0", label: "Accounts required" },
           ].map((stat) => (
@@ -99,8 +99,12 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {models.map((model) => (
-              <ModelCard key={model.slug} model={model} />
+            {platforms.map((platform) => (
+              <PlatformCard
+                key={platform.slug}
+                platform={platform}
+                trims={getTrimsForPlatform(platform.slug)}
+              />
             ))}
           </div>
         </Container>

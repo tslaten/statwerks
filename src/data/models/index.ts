@@ -1,19 +1,51 @@
-import { cayman981S } from "./981-cayman-s";
-import { carrera9971S } from "./997-1-carrera-s";
-import type { Model } from "./types";
+import { cayman981 } from "./platforms/981-cayman";
+import { carrera9971 } from "./platforms/997-1-carrera";
+import { cayman981S } from "./trims/981-cayman-s";
+import { carrera9971S } from "./trims/997-1-carrera-s";
+import { SEVERITY_ORDER, type KnownIssue, type Platform, type QuickFact, type Trim } from "./types";
 
 export * from "./types";
 
-/**
- * Every model dashboard the site knows about. Order here controls the
- * order cards appear on /models — add new entries at the end.
- */
-export const models: Model[] = [cayman981S, carrera9971S];
+/** Every platform (generation) the site knows about. */
+export const platforms: Platform[] = [cayman981, carrera9971];
 
-export function getAllModels(): Model[] {
-  return models;
+/**
+ * Every trim the site knows about, each pointing back at a platform via
+ * `platformSlug`. Add a new trim here — nothing above needs to change.
+ */
+export const trims: Trim[] = [cayman981S, carrera9971S];
+
+export function getAllPlatforms(): Platform[] {
+  return platforms;
 }
 
-export function getModelBySlug(slug: string): Model | undefined {
-  return models.find((model) => model.slug === slug);
+export function getPlatformBySlug(slug: string): Platform | undefined {
+  return platforms.find((platform) => platform.slug === slug);
+}
+
+export function getTrimsForPlatform(platformSlug: string): Trim[] {
+  return trims.filter((trim) => trim.platformSlug === platformSlug);
+}
+
+export function getTrim(platformSlug: string, trimSlug: string): Trim | undefined {
+  return trims.find(
+    (trim) => trim.platformSlug === platformSlug && trim.slug === trimSlug
+  );
+}
+
+/** Every valid (platform, trim) slug pair — feeds generateStaticParams. */
+export function getAllPlatformTrimParams(): { platform: string; trim: string }[] {
+  return trims.map((trim) => ({ platform: trim.platformSlug, trim: trim.slug }));
+}
+
+/** A trim's known issues plus everything shared by its platform, severity-sorted. */
+export function mergedKnownIssues(platform: Platform, trim: Trim): KnownIssue[] {
+  return [...platform.sharedKnownIssues, ...trim.knownIssues].sort(
+    (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]
+  );
+}
+
+/** A trim's spec readout: platform-level facts followed by trim-level facts. */
+export function mergedQuickFacts(platform: Platform, trim: Trim): QuickFact[] {
+  return [...platform.overview.quickFacts, ...trim.overview.quickFacts];
 }

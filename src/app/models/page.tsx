@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
-import { ModelCard } from "@/components/ui/model-card";
-import { getAllModels } from "@/data/models";
+import { PlatformCard } from "@/components/ui/platform-card";
+import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
 
 export const metadata: Metadata = {
   title: "Model dashboards",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function ModelsIndexPage() {
-  const models = getAllModels();
+  const platforms = getAllPlatforms();
 
   return (
     <Container className="py-16 md:py-20">
@@ -20,13 +20,17 @@ export default function ModelsIndexPage() {
       </h1>
       <p className="mt-5 max-w-xl text-[0.9375rem] leading-relaxed text-steel">
         Each dashboard covers known issues by severity, general market
-        pricing context, and a buying checklist specific to that model and
-        generation. More are added over time.
+        pricing context, and a buying checklist specific to that model,
+        generation, and trim. More are added over time.
       </p>
 
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {models.map((model) => (
-          <ModelCard key={model.slug} model={model} />
+        {platforms.map((platform) => (
+          <PlatformCard
+            key={platform.slug}
+            platform={platform}
+            trims={getTrimsForPlatform(platform.slug)}
+          />
         ))}
       </div>
     </Container>

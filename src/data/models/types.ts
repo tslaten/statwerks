@@ -1,20 +1,32 @@
 /**
- * Content schema for a model buying dashboard (/models/[slug]).
+ * Content schema for model buying dashboards.
  *
- * This is Phase 1's entire content model: everything on a model page is
- * data, not JSX. To add a model, create a new file in this directory that
- * satisfies the `Model` type and register it in `index.ts` — see
- * `src/data/models/README.md` for the full walkthrough.
+ * Two tiers, matched to how Porsche generations actually work:
  *
- * Kept in mind for later (not implemented in Phase 1, see AGENTS.md):
- * a paid VIN-specific report and PPI-inspector referrals will eventually
- * hang off this same model record (e.g. a `vin`-keyed report keyed by
- * `chassisCode`, or a referral list scoped by `slug`). Nothing here should
- * need to change shape to support that later — new top-level fields would
- * just be added.
+ * - `Platform` — one per generation/chassis (e.g. "981 Cayman"). Holds
+ *   facts and known issues common to every trim of that generation.
+ * - `Trim` — one per trim within a platform (e.g. "Cayman S"). Extends
+ *   its platform with trim-specific specs, known issues, and pricing.
+ *   Points back at its platform via `platformSlug`.
+ *
+ * This is a many-to-one join by string slug, not nesting — adding a new
+ * trim (GTS, Base, GT4, ...) is a new file in `trims/` that references an
+ * existing `platformSlug`. Nothing about the platform file changes.
+ *
+ * Route: `/models/[platform]/[trim]`, e.g. `/models/981-cayman/s`.
+ *
+ * See `src/data/models/README.md` for the full walkthrough of adding a
+ * platform or trim.
+ *
+ * Kept in mind for later (not implemented in Phase 1, see AGENTS.md): a
+ * paid VIN-specific report and PPI-inspector referrals will eventually
+ * hang off a specific trim (or VIN within a trim). Nothing here should
+ * need to change shape to support that later — new top-level fields
+ * would just be added to `Trim`.
  */
 
 export type Severity = "critical" | "watch" | "clear";
+export type ContentStatus = "placeholder" | "reviewed";
 
 export interface QuickFact {
   label: string;
@@ -52,34 +64,65 @@ export interface BuyingChecklist {
   ppiAdvice: string[];
 }
 
-export interface ModelOverview {
-  /** e.g. "2013–2016" */
+export interface PlatformOverview {
+  /** Generation production span, e.g. "2013–2016" */
   years: string;
-  engine: string;
   layout: string;
-  /** e.g. "Coupe, 2dr" */
+  /** e.g. "2dr coupe" */
   body: string;
-  /** 2-4 sentence intro paragraph for the model. */
+  /** 2-4 sentence intro paragraph for the generation. */
   summary: string;
+  /** Platform-level spec readout (production years, chassis code, layout, ...). */
   quickFacts: QuickFact[];
 }
 
-export interface Model {
+export interface Platform {
+  /** URL slug — first segment: /models/[slug] */
   slug: string;
   /** Internal factory chassis code, e.g. "981" — shown in mono readouts. */
   chassisCode: string;
-  /** Display name, e.g. "981 Cayman S / Boxster S" */
+  /** Display name, e.g. "981 Cayman" */
   name: string;
-  /** Short name for tight spaces (nav, breadcrumbs), e.g. "981 Cayman S" */
+  /** Short name for tight spaces (nav, breadcrumbs). */
   shortName: string;
   /** One-line teaser shown on the /models index card. */
   teaser: string;
   /** Whether this entry has been reviewed with real research content yet. */
-  contentStatus: "placeholder" | "reviewed";
-  overview: ModelOverview;
+  contentStatus: ContentStatus;
+  overview: PlatformOverview;
+  /** Known issues that apply across every trim of this platform. */
+  sharedKnownIssues: KnownIssue[];
+  /** Buying guidance shared across every trim of this platform. */
+  checklist: BuyingChecklist;
+}
+
+export interface TrimOverview {
+  engine: string;
+  power: string;
+  zeroToSixty: string;
+  transmission: string;
+  curbWeight: string;
+  /** Trim-level spec readout (engine, power, 0-60, transmission, weight, ...). */
+  quickFacts: QuickFact[];
+  /** Optional trim-specific blurb — what sets this trim apart within the platform. */
+  summary?: string;
+}
+
+export interface Trim {
+  /** URL slug — second segment: /models/[platformSlug]/[slug] */
+  slug: string;
+  /** Foreign key back to Platform.slug. */
+  platformSlug: string;
+  /** Display name, e.g. "Cayman S" */
+  name: string;
+  shortName: string;
+  /** One-line teaser shown on the platform hub page's trim card. */
+  teaser: string;
+  contentStatus: ContentStatus;
+  overview: TrimOverview;
+  /** Known issues specific to this trim, in addition to the platform's shared list. */
   knownIssues: KnownIssue[];
   marketContext: MarketContext;
-  checklist: BuyingChecklist;
 }
 
 export const SEVERITY_LABEL: Record<Severity, string> = {

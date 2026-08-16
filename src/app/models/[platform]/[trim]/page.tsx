@@ -8,74 +8,93 @@ import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SpecStrip } from "@/components/ui/spec-strip";
-import { getAllModels, getModelBySlug, SEVERITY_ORDER } from "@/data/models";
+import {
+  getAllPlatformTrimParams,
+  getPlatformBySlug,
+  getTrim,
+  mergedKnownIssues,
+  mergedQuickFacts,
+} from "@/data/models";
 
 export function generateStaticParams() {
-  return getAllModels().map((model) => ({ slug: model.slug }));
+  return getAllPlatformTrimParams();
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/models/[slug]">): Promise<Metadata> {
-  const { slug } = await params;
-  const model = getModelBySlug(slug);
-  if (!model) return {};
+}: PageProps<"/models/[platform]/[trim]">): Promise<Metadata> {
+  const { platform: platformSlug, trim: trimSlug } = await params;
+  const platform = getPlatformBySlug(platformSlug);
+  const trim = platform && getTrim(platformSlug, trimSlug);
+  if (!platform || !trim) return {};
+
+  const description = trim.overview.summary ?? platform.overview.summary;
 
   return {
-    title: model.name,
-    description: model.overview.summary,
+    title: `${platform.chassisCode} ${trim.name}`,
+    description,
     openGraph: {
-      title: `${model.name} buying dashboard`,
-      description: model.overview.summary,
+      title: `${platform.chassisCode} ${trim.name} buying dashboard`,
+      description,
     },
   };
 }
 
-export default async function ModelPage({
+export default async function TrimPage({
   params,
-}: PageProps<"/models/[slug]">) {
-  const { slug } = await params;
-  const model = getModelBySlug(slug);
-  if (!model) notFound();
+}: PageProps<"/models/[platform]/[trim]">) {
+  const { platform: platformSlug, trim: trimSlug } = await params;
+  const platform = getPlatformBySlug(platformSlug);
+  const trim = platform && getTrim(platformSlug, trimSlug);
+  if (!platform || !trim) notFound();
 
-  const issues = [...model.knownIssues].sort(
-    (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]
-  );
+  const issues = mergedKnownIssues(platform, trim);
+  const quickFacts = mergedQuickFacts(platform, trim);
   const criticalCount = issues.filter((i) => i.severity === "critical").length;
+  const isDraft =
+    platform.contentStatus === "placeholder" ||
+    trim.contentStatus === "placeholder";
 
   return (
     <>
-      {model.contentStatus === "placeholder" ? <DraftBanner /> : null}
+      {isDraft ? <DraftBanner /> : null}
 
       <header className="border-b border-hairline">
         <Container className="pb-10 pt-12 md:pt-16">
-          <nav className="label-mono flex items-center gap-2 text-steel-dim">
+          <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
             <Link href="/models" className="transition-colors hover:text-ink">
               Models
             </Link>
             <span aria-hidden>/</span>
-            <span className="text-steel">{model.shortName}</span>
+            <Link
+              href={`/models/${platform.slug}`}
+              className="transition-colors hover:text-ink"
+            >
+              {platform.shortName}
+            </Link>
+            <span aria-hidden>/</span>
+            <span className="text-steel">{trim.shortName}</span>
           </nav>
 
           <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
             <span className="label-mono text-steel-dim">
-              {model.chassisCode}
+              {platform.chassisCode}
             </span>
             <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
-              {model.name}
+              {platform.chassisCode} {trim.name}
             </h1>
           </div>
           <p className="mt-2 font-mono text-sm text-steel">
-            {model.overview.years} · {model.overview.body}
+            {platform.overview.years} · {platform.overview.body}
           </p>
 
           <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-ink/90">
-            {model.overview.summary}
+            {trim.overview.summary ?? platform.overview.summary}
           </p>
         </Container>
 
         <Container>
-          <SpecStrip facts={model.overview.quickFacts} />
+          <SpecStrip facts={quickFacts} />
         </Container>
       </header>
 
@@ -95,7 +114,7 @@ export default async function ModelPage({
 
         <section aria-labelledby="market-context" className="mt-16 md:mt-20">
           <SectionHeading index="02" title="Market pricing context" />
-          <MarketContextPanel context={model.marketContext} />
+          <MarketContextPanel context={trim.marketContext} />
         </section>
 
         <section aria-labelledby="checklist" className="mt-16 md:mt-20">
@@ -103,15 +122,15 @@ export default async function ModelPage({
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
             <ChecklistGroup
               title="Documents to request"
-              items={model.checklist.documentsToRequest}
+              items={platform.checklist.documentsToRequest}
             />
             <ChecklistGroup
               title="Questions for the seller"
-              items={model.checklist.questionsForSeller}
+              items={platform.checklist.questionsForSeller}
             />
             <ChecklistGroup
               title="PPI advice"
-              items={model.checklist.ppiAdvice}
+              items={platform.checklist.ppiAdvice}
             />
           </div>
         </section>
