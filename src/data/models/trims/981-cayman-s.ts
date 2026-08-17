@@ -21,7 +21,7 @@ export const cayman981S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/981-cayman/s.png",
-    alt: "981 Cayman S, white, three-quarter front view",
+    alt: "981 Cayman S, white, side profile view",
   },
 
   overview: {
