@@ -70,6 +70,15 @@ This is the case the schema is built around — e.g. adding "GTS" to the
   the optional `checklistAdditions` (e.g. "test PDK shift quality" only
   makes sense on PDK-equipped trims) — `mergedChecklist()` combines the
   two for display, platform items first.
+- `image` (trim-level, optional) — a background-removed product shot.
+  Drop the file under `public/vehicles/<platformSlug>/<trimSlug>.png`
+  (PNG or WebP, transparent background, ~1600px on the long edge, and
+  keep the same crop/angle — e.g. all 3/4-front — across trims so the
+  index grid doesn't look mismatched), then set
+  `image: { src: "/vehicles/981-cayman/s.png", alt: "981 Cayman S, three-quarter front view" }`.
+  Every page that shows an image renders a placeholder (dashed box,
+  car icon, "Image pending") when this is omitted, so it's safe to
+  leave unset and add later without touching layout code.
 
 ## Later phases (don't build yet, just don't paint into a corner)
 

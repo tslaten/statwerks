@@ -33,6 +33,12 @@ export interface QuickFact {
   value: string;
 }
 
+export interface VehicleImage {
+  /** Path under /public, e.g. "/vehicles/981-cayman/s.png" */
+  src: string;
+  alt: string;
+}
+
 export interface KnownIssue {
   /** Stable id for anchors/links, e.g. "ims-bearing" */
   id: string;
@@ -120,6 +126,13 @@ export interface Trim {
   teaser: string;
   contentStatus: ContentStatus;
   overview: TrimOverview;
+  /**
+   * Background-removed product shot, used as the hero image on the trim
+   * page and as a card thumbnail on /models and the platform hub. Optional
+   * — pages render a placeholder state when it's missing, so this can be
+   * added whenever a real image is sourced without any other changes.
+   */
+  image?: VehicleImage;
   /** Known issues specific to this trim, in addition to the platform's shared list. */
   knownIssues: KnownIssue[];
   marketContext: MarketContext;

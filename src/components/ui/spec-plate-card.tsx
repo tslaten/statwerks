@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import type { Severity } from "@/data/models";
+import type { Severity, VehicleImage } from "@/data/models";
 import { SeverityDot } from "./severity-tag";
+import { VehiclePhoto } from "./vehicle-photo";
 
 export interface SeverityCount {
   severity: Severity;
@@ -10,8 +11,8 @@ export interface SeverityCount {
 
 /**
  * Shared spec-plate visual for platform and trim cards — a link styled
- * like a build-sheet entry: big kicker digit/badge, meta readout, teaser,
- * severity preview, and a CTA row.
+ * like a build-sheet entry: vehicle photo (or placeholder), kicker/meta
+ * readout, teaser, severity preview, and a CTA row.
  */
 export function SpecPlateCard({
   href,
@@ -23,6 +24,7 @@ export function SpecPlateCard({
   draft,
   ctaLabel = "View dashboard →",
   extra,
+  image,
 }: {
   href: string;
   kicker: string;
@@ -33,45 +35,55 @@ export function SpecPlateCard({
   draft?: boolean;
   ctaLabel?: string;
   extra?: ReactNode;
+  image?: VehicleImage;
 }) {
   return (
     <Link
       href={href}
-      className="shadow-card hover:shadow-card-hover group relative block rounded-2xl bg-surface p-6 transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5"
+      className="shadow-card hover:shadow-card-hover group relative block overflow-hidden rounded-2xl bg-surface transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5"
     >
       {draft ? (
-        <span className="label-mono absolute right-6 top-6 text-watch">
+        <span className="label-mono glass absolute right-4 top-4 z-10 rounded-full px-2.5 py-1 text-watch">
           Draft
         </span>
       ) : null}
-      <div className="flex items-start justify-between pr-14">
-        <span className="text-stretch font-display text-4xl font-semibold text-ink">
-          {kicker}
-        </span>
-        {meta ? (
-          <span className="label-mono pt-2 text-steel-dim">{meta}</span>
-        ) : null}
-      </div>
-      <h3 className="mt-5 font-display text-lg font-medium text-ink">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm leading-relaxed text-steel">{teaser}</p>
-      {extra}
-      <div className="mt-6 flex items-center justify-between border-t border-line/70 pt-4">
-        <div className="flex items-center gap-4">
-          {severityCounts.map(({ severity, count }) => (
-            <span
-              key={severity}
-              className="flex items-center gap-1.5 font-mono text-xs text-steel"
-            >
-              <SeverityDot severity={severity} />
-              {count}
-            </span>
-          ))}
+      <VehiclePhoto
+        image={image}
+        fallbackLabel={title}
+        className="aspect-video w-full"
+        iconSize={22}
+        bordered={false}
+      />
+      <div className="p-6 pt-5">
+        <div className="flex items-start justify-between">
+          <span className="text-stretch font-display text-lg font-semibold text-ink">
+            {kicker}
+          </span>
+          {meta ? (
+            <span className="label-mono pt-1 text-steel-dim">{meta}</span>
+          ) : null}
         </div>
-        <span className="label-mono text-steel transition-colors group-hover:text-ink">
-          {ctaLabel}
-        </span>
+        <h3 className="mt-2 font-display text-lg font-medium text-ink">
+          {title}
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-steel">{teaser}</p>
+        {extra}
+        <div className="mt-6 flex items-center justify-between border-t border-line/70 pt-4">
+          <div className="flex items-center gap-4">
+            {severityCounts.map(({ severity, count }) => (
+              <span
+                key={severity}
+                className="flex items-center gap-1.5 font-mono text-xs text-steel"
+              >
+                <SeverityDot severity={severity} />
+                {count}
+              </span>
+            ))}
+          </div>
+          <span className="label-mono text-steel transition-colors group-hover:text-ink">
+            {ctaLabel}
+          </span>
+        </div>
       </div>
     </Link>
   );

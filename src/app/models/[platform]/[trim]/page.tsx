@@ -12,6 +12,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { countBySeverity } from "@/components/ui/spec-plate-card";
 import { SpecStrip } from "@/components/ui/spec-strip";
 import { SeverityMixBar } from "@/components/ui/severity-mix-bar";
+import { VehiclePhoto } from "@/components/ui/vehicle-photo";
 import {
   getAllPlatformTrimParams,
   getPlatformBySlug,
@@ -75,36 +76,47 @@ export default async function TrimPage({
 
       <header>
         <Container wide className="pb-10 pt-12 md:pt-16">
-          <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
-            <Link href="/models" className="transition-colors hover:text-ink">
-              Models
-            </Link>
-            <span aria-hidden>/</span>
-            <Link
-              href={`/models/${platform.slug}`}
-              className="transition-colors hover:text-ink"
-            >
-              {platform.shortName}
-            </Link>
-            <span aria-hidden>/</span>
-            <span className="text-steel">{trim.shortName}</span>
-          </nav>
+          <div className="md:flex md:items-start md:justify-between md:gap-12">
+            <div className="md:max-w-2xl">
+              <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
+                <Link href="/models" className="transition-colors hover:text-ink">
+                  Models
+                </Link>
+                <span aria-hidden>/</span>
+                <Link
+                  href={`/models/${platform.slug}`}
+                  className="transition-colors hover:text-ink"
+                >
+                  {platform.shortName}
+                </Link>
+                <span aria-hidden>/</span>
+                <span className="text-steel">{trim.shortName}</span>
+              </nav>
 
-          <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-            <span className="label-mono text-steel-dim">
-              {platform.chassisCode}
-            </span>
-            <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
-              {platform.chassisCode} {trim.name}
-            </h1>
+              <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <span className="label-mono text-steel-dim">
+                  {platform.chassisCode}
+                </span>
+                <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
+                  {platform.chassisCode} {trim.name}
+                </h1>
+              </div>
+              <p className="mt-2 font-mono text-sm text-steel">
+                {platform.overview.years} · {platform.overview.body}
+              </p>
+
+              <p className="mt-6 text-[0.9375rem] leading-relaxed text-ink/90">
+                {trim.overview.summary ?? platform.overview.summary}
+              </p>
+            </div>
+
+            <VehiclePhoto
+              image={trim.image}
+              fallbackLabel={`${platform.chassisCode} ${trim.name}`}
+              className="mt-8 aspect-[4/3] w-full md:mt-0 md:w-96 md:shrink-0"
+              iconSize={36}
+            />
           </div>
-          <p className="mt-2 font-mono text-sm text-steel">
-            {platform.overview.years} · {platform.overview.body}
-          </p>
-
-          <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-ink/90">
-            {trim.overview.summary ?? platform.overview.summary}
-          </p>
         </Container>
       </header>
 

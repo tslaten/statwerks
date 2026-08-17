@@ -39,6 +39,7 @@ export function PlatformCard({
       severityCounts={countBySeverity(issues)}
       draft={draft}
       ctaLabel={onlyTrim ? "View dashboard →" : "View trims →"}
+      image={onlyTrim?.image}
     />
   );
 }

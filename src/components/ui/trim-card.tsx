@@ -23,6 +23,7 @@ export function TrimCard({
         trim.contentStatus === "placeholder" ||
         platform.contentStatus === "placeholder"
       }
+      image={trim.image}
     />
   );
 }
