@@ -1,7 +1,7 @@
 import { cayman981 } from "./platforms/981-cayman";
-import { carrera9971 } from "./platforms/997-1-carrera";
+import { carrera9972 } from "./platforms/997-2-carrera";
 import { cayman981S } from "./trims/981-cayman-s";
-import { carrera9971S } from "./trims/997-1-carrera-s";
+import { carrera9972S } from "./trims/997-2-carrera-s";
 import {
   SEVERITY_ORDER,
   type BuyingChecklist,
@@ -14,13 +14,13 @@ import {
 export * from "./types";
 
 /** Every platform (generation) the site knows about. */
-export const platforms: Platform[] = [cayman981, carrera9971];
+export const platforms: Platform[] = [cayman981, carrera9972];
 
 /**
  * Every trim the site knows about, each pointing back at a platform via
  * `platformSlug`. Add a new trim here — nothing above needs to change.
  */
-export const trims: Trim[] = [cayman981S, carrera9971S];
+export const trims: Trim[] = [cayman981S, carrera9972S];
 
 export function getAllPlatforms(): Platform[] {
   return platforms;

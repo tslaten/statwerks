@@ -34,7 +34,7 @@ This is the case the schema is built around — e.g. adding "GTS" to the
 4. Register it in `index.ts`:
    ```ts
    import { cayman981Gts } from "./trims/981-cayman-gts";
-   export const trims: Trim[] = [cayman981S, carrera9971S, cayman981Gts];
+   export const trims: Trim[] = [cayman981S, carrera9972S, cayman981Gts];
    ```
 5. Done. `/models/981-cayman` automatically shows a card for the new
    trim, and `/models/981-cayman/gts` renders its full dashboard. The
