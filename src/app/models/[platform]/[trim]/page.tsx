@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AlertTriangle, ClipboardList, DollarSign, LayoutGrid } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { ChecklistGroup } from "@/components/ui/checklist-group";
+import { DashboardNav } from "@/components/ui/dashboard-nav";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
@@ -42,6 +44,13 @@ export async function generateMetadata({
     },
   };
 }
+
+const NAV_ITEMS = [
+  { href: "#overview", label: "Overview", icon: LayoutGrid },
+  { href: "#known-issues", label: "Known issues", icon: AlertTriangle },
+  { href: "#market-context", label: "Market pricing", icon: DollarSign },
+  { href: "#checklist", label: "Buying checklist", icon: ClipboardList },
+];
 
 export default async function TrimPage({
   params,
@@ -101,26 +110,31 @@ export default async function TrimPage({
 
       <Container wide className="pb-14 pt-4 md:pb-20">
         <div className="lg:flex lg:items-start lg:gap-10">
-          {/* Sidebar — "at a glance" specs + severity mix, sticky on desktop.
-              Rendered first so mobile sees it before the long issue list. */}
-          <aside className="mb-10 lg:order-2 lg:mb-0 lg:sticky lg:top-24 lg:w-72 lg:shrink-0">
-            <p className="label-mono text-steel-dim">At a glance</p>
-            <div className="mt-4">
-              <SpecStrip facts={quickFacts} />
-            </div>
-            <div className="shadow-card mt-3 rounded-xl bg-surface px-4 py-4">
-              <p className="label-mono mb-3 text-steel-dim">
-                Known-issue mix
-              </p>
-              <SeverityMixBar counts={severityCounts} />
-            </div>
+          <aside className="mb-8 lg:mb-0 lg:w-52 lg:shrink-0">
+            <DashboardNav items={NAV_ITEMS} />
           </aside>
 
-          <div className="lg:order-1 lg:min-w-0 lg:flex-1">
-            <section aria-labelledby="known-issues">
+          <div className="lg:min-w-0 lg:flex-1">
+            <section id="overview" className="scroll-mt-28">
+              <SectionHeading index="00" title="Overview" icon={LayoutGrid} />
+              <SpecStrip facts={quickFacts} />
+              <div className="shadow-card mt-5 rounded-2xl bg-surface p-5">
+                <p className="label-mono mb-3 text-steel-dim">
+                  Known-issue mix
+                </p>
+                <SeverityMixBar counts={severityCounts} />
+              </div>
+            </section>
+
+            <section
+              id="known-issues"
+              aria-labelledby="known-issues"
+              className="mt-16 scroll-mt-28 md:mt-20"
+            >
               <SectionHeading
                 index="01"
                 title="Known issues"
+                icon={AlertTriangle}
                 aside={`${issues.length} flagged · ${criticalCount} critical`}
               />
               <div className="max-w-3xl space-y-4">
@@ -130,15 +144,31 @@ export default async function TrimPage({
               </div>
             </section>
 
-            <section aria-labelledby="market-context" className="mt-16 md:mt-20">
-              <SectionHeading index="02" title="Market pricing context" />
+            <section
+              id="market-context"
+              aria-labelledby="market-context"
+              className="mt-16 scroll-mt-28 md:mt-20"
+            >
+              <SectionHeading
+                index="02"
+                title="Market pricing context"
+                icon={DollarSign}
+              />
               <div className="max-w-3xl">
                 <MarketContextPanel context={trim.marketContext} />
               </div>
             </section>
 
-            <section aria-labelledby="checklist" className="mt-16 md:mt-20">
-              <SectionHeading index="03" title="Buying checklist" />
+            <section
+              id="checklist"
+              aria-labelledby="checklist"
+              className="mt-16 scroll-mt-28 md:mt-20"
+            >
+              <SectionHeading
+                index="03"
+                title="Buying checklist"
+                icon={ClipboardList}
+              />
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <ChecklistGroup
                   title="Documents to request"
