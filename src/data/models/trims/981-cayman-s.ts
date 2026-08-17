@@ -19,6 +19,10 @@ export const cayman981S: Trim = {
   teaser:
     "The larger 3.4L flat-six over base — the sweet spot most buyers cross-shop first.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/981-cayman/s.png",
+    alt: "981 Cayman S, white, three-quarter front view",
+  },
 
   overview: {
     engine: "3.4L flat-six, naturally aspirated (direct injection)",
