@@ -19,6 +19,12 @@ import type { Trim } from "../types";
  * base — real-world case data doesn't show a clear difference, so
  * this stays a Clear, no-dominant-trim-specific-pattern entry rather
  * than a trim-level flag of its own.
+ *
+ * Updated again August 2026: added `popularOptions` + `optionsNote`
+ * from an owner-supplied source covering factory-option desirability
+ * (PASM, Sport Chrono, PSE, PTV+LSD, etc.). Everything else in that
+ * source (specs, pricing, checklist, known issues) matched what was
+ * already here — no other fields changed.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -92,4 +98,57 @@ export const cayman981S: Trim = {
     recordLow: { price: 22895, note: "2013 model year, April 2023 sale" },
     recordHigh: { price: 76500, note: "2014 model year, August 2025 sale" },
   },
+
+  popularOptions: [
+    {
+      id: "pasm",
+      name: "PASM (Porsche Active Suspension Management)",
+      tag: "popular",
+      note: "Fully optional on the Cayman S — unlike some Carrera trims, it doesn't come standard even here. Lets the car switch between comfort and sport-focused suspension settings; buyers consistently seek it out for the balance between daily usability and performance.",
+    },
+    {
+      id: "sport-chrono",
+      name: "Sport Chrono Package",
+      tag: "popular",
+      note: "Sharpens throttle response, adjusts stability control for spirited driving, and adds Sport/Sport Plus modes. Effectively essential on PDK cars (faster, more aggressive shifts); manual owners are more split — desirable but not essential to most.",
+    },
+    {
+      id: "pse",
+      name: "PSE (Porsche Sport Exhaust)",
+      tag: "popular",
+      note: "Widely cited as a must-have for the sound alone, and cars with it consistently command a premium. Worth knowing there's real dissent too — at least one long-term owner found it droned more than expected and ran with it deselected much of the time. A desirability driver, not a universal favorite.",
+    },
+    {
+      id: "ptv-lsd",
+      name: "PTV (Porsche Torque Vectoring) + Limited-Slip Differential",
+      tag: "popular",
+      note: "Named together as one of the most desirable performance combinations for this generation — specifically called out as the standout handling upgrade for 981/982-era cars.",
+    },
+    {
+      id: "sport-seats",
+      name: "Sport seats / adaptive sport seats",
+      tag: "popular",
+      note: "Consistently listed among the top desirability drivers for this generation, alongside Sport Chrono and PSE.",
+    },
+    {
+      id: "manual-transmission",
+      name: "6-speed manual transmission",
+      tag: "popular",
+      note: "Named as a desirability factor in buying guides, but owner sentiment here is more genuinely mixed than on the 911 — several owners specifically prefer PDK on the Cayman S for everyday driving. Treat as a real preference split, not a settled \"manual is better\" consensus.",
+    },
+    {
+      id: "pdls",
+      name: "PDLS (Porsche Dynamic Light System) / bi-xenon headlights",
+      tag: "popular",
+      note: "Optional bi-xenon headlights with dynamic light system, named as a desirable feature by owners cross-shopping used examples.",
+    },
+    {
+      id: "pccb",
+      name: "PCCB (carbon ceramic brakes)",
+      tag: "rare",
+      note: "Lighter and more durable than standard steel brakes, but an expensive, uncommon factory option on this generation — a nice find rather than something to expect or hold out for.",
+    },
+  ],
+  optionsNote:
+    "PASM being fully optional (not standard) on this trim is an easy detail to get wrong if assuming it works the same way as on some 911 trims — always verify per model/trim rather than carrying an assumption over. Sport Chrono and manual-vs-PDK sentiment also run more split among Cayman/Boxster owners than among 911 owners — don't overstate consensus where real disagreement exists.",
 };

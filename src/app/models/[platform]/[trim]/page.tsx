@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ClipboardList, DollarSign, LayoutGrid } from "lucide-react";
+import { AlertTriangle, ClipboardList, DollarSign, LayoutGrid, Tag } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { ChecklistGroup } from "@/components/ui/checklist-group";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
+import { PopularOptionsGrid } from "@/components/ui/popular-options-grid";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { countBySeverity } from "@/components/ui/spec-plate-card";
 import { SpecStrip } from "@/components/ui/spec-strip";
@@ -168,13 +169,32 @@ export default async function TrimPage({
           </section>
         </div>
 
+        {trim.popularOptions && trim.popularOptions.length > 0 ? (
+          <section
+            id="options"
+            aria-labelledby="options"
+            className="mt-16 scroll-mt-24 md:mt-20"
+          >
+            <SectionHeading
+              index="03"
+              title="Popular options"
+              icon={Tag}
+              aside={`${trim.popularOptions.length} tracked`}
+            />
+            <PopularOptionsGrid
+              options={trim.popularOptions}
+              note={trim.optionsNote}
+            />
+          </section>
+        ) : null}
+
         <section
           id="checklist"
           aria-labelledby="checklist"
           className="mt-16 scroll-mt-24 md:mt-20"
         >
           <SectionHeading
-            index="03"
+            index={trim.popularOptions && trim.popularOptions.length > 0 ? "04" : "03"}
             title="Buying checklist"
             icon={ClipboardList}
           />

@@ -84,6 +84,23 @@ export interface BuyingChecklist {
   ppiAdvice: string[];
 }
 
+/**
+ * How sought-after a factory option is among buyers/specialists — a
+ * desirability signal, not a severity one. Deliberately does not reuse
+ * `Severity`'s color language (critical/watch/clear), since "popular"
+ * isn't "bad" and "rare" isn't "good" the way severity tags are.
+ */
+export type OptionTag = "popular" | "rare" | "standard";
+
+export interface PopularOption {
+  /** Stable id, e.g. "sport-chrono" */
+  id: string;
+  name: string;
+  tag: OptionTag;
+  /** Why it's tagged that way, and any nuance/dissent worth flagging. */
+  note: string;
+}
+
 export interface PlatformOverview {
   /** Generation production span, e.g. "2013–2016" */
   years: string;
@@ -157,6 +174,16 @@ export interface Trim {
    * Merged onto `Platform.checklist` via `mergedChecklist()` for display.
    */
   checklistAdditions?: Partial<BuyingChecklist>;
+  /**
+   * Notable factory options for this trim and how sought-after each is.
+   * Optional — omit until researched; the section just doesn't render.
+   */
+  popularOptions?: PopularOption[];
+  /**
+   * Caveat/context paragraph about how much options actually move resale
+   * value — shown under the options grid when present. Optional.
+   */
+  optionsNote?: string;
 }
 
 export const SEVERITY_LABEL: Record<Severity, string> = {

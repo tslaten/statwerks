@@ -19,6 +19,12 @@ import type { Trim } from "../types";
  * meaningfully rarer, but real). This trim's own known-issues copy is
  * updated to stop implying it's a solved problem; see the platform
  * file's header comment for the full explanation.
+ *
+ * Updated again August 2026: added `popularOptions` + `optionsNote`
+ * from an owner-supplied source covering factory-option desirability
+ * (manual vs. PDK, Sport Chrono, PSE, Sport PASM, etc.). Everything
+ * else in that source (specs, pricing, checklist, known issues)
+ * matched what was already here — no other fields changed.
  */
 export const carrera9972S: Trim = {
   slug: "s",
@@ -85,4 +91,57 @@ export const carrera9972S: Trim = {
     recordLow: { price: 22750, note: "2009 model year" },
     recordHigh: { price: 120000, note: "2009 model year, December 2022 sale" },
   },
+
+  popularOptions: [
+    {
+      id: "manual-transmission",
+      name: "6-speed manual transmission",
+      tag: "popular",
+      note: "Widely considered the most sought-after configuration of this generation and consistently commands a premium over PDK — even though PDK is objectively quicker. Increasingly hard to find as the used market thins out.",
+    },
+    {
+      id: "sport-chrono",
+      name: "Sport Chrono Package",
+      tag: "popular",
+      note: "Near-essential on PDK cars (unlocks launch control and sharper throttle mapping) and a strong nice-to-have on manuals. A meaningful resale booster, though one forum estimate put the premium at roughly what a dealer retrofit costs ($1,500) — close to a wash to add later, but factory-original examples are still preferred.",
+    },
+    {
+      id: "pse",
+      name: "PSE (Porsche Sport Exhaust)",
+      tag: "popular",
+      note: "A switchable exhaust mode (quiet/loud), mostly found on 2010+ cars — delayed on most 2009 models. Widely cited as one of the most desirable options for a naturally aspirated 911, specifically for the sound.",
+    },
+    {
+      id: "sport-seats",
+      name: "Sport seats",
+      tag: "popular",
+      note: "Consistently named alongside Sport Chrono and PSE as a top desirability driver in buyer discussions.",
+    },
+    {
+      id: "sport-pasm",
+      name: "Sport PASM (SPASM)",
+      tag: "popular",
+      note: "New to the 997.2, replacing the earlier \"Minus 20\" sport suspension package — lowers the car a further 10mm beyond standard PASM with firmer springs, and bundles in a rear limited-slip differential on rear-wheel-drive cars. Coupe-only. Priced at just $950 when new, making it one of the more affordable desirable options to look for.",
+    },
+    {
+      id: "limited-slip-diff",
+      name: "Limited-slip differential (LSD)",
+      tag: "popular",
+      note: "Called out in specialist buying guides as a desirable option that helps a car hold value. On rear-wheel-drive coupes it comes bundled with Sport PASM rather than standalone — check for Sport PASM specifically. Standard equipment on Carrera 4S (AWD) cars.",
+    },
+    {
+      id: "pccb",
+      name: "PCCB (Porsche Ceramic Composite Brakes)",
+      tag: "rare",
+      note: "A roughly $8,000 factory option, uncommon on non-Turbo/non-GT3 cars. Desirable for non-track use, but rare enough that it shouldn't be expected — a nice find rather than something to hold out for.",
+    },
+    {
+      id: "pasm",
+      name: "PASM (adaptive suspension)",
+      tag: "standard",
+      note: "Standard equipment on the Carrera S — the optional upgrade on the base Carrera. Not something to seek out separately here, since every S already has it.",
+    },
+  ],
+  optionsNote:
+    "Not everyone agrees options move resale much on a car this age — one long-running forum thread argues that by the time a 997.2 is 15+ years old, extras like Sport Chrono add \"almost nothing\" to resale value the way they might on a newer car. The tags above reflect what buyers commonly seek out and specialists commonly recommend, not a guaranteed price premium — factor it into desirability and how quickly a car sells, not as a fixed dollar amount.",
 };
