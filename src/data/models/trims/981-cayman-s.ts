@@ -88,5 +88,8 @@ export const cayman981S: Trim = {
     trendSummary:
       "Average sale price sits around $49,900, with good-condition examples starting around $35,000 and exceptional or well-documented cars reaching into the mid-$70s at auction — the current recorded high is $76,500 (2014 model year, August 2025). The recorded low, $22,895 for a 2013 model year car in April 2023, reflects a rough or high-mile outlier rather than a typical clean example, so treat it as a floor for problem cars, not a shopping target. Considered a relative bargain against the newer 718 generation — used 981 S pricing sits well below entry pricing on a new or lightly used 718 Cayman. Manually curated from public sale-price aggregators, cross-checked against enthusiast press coverage — refresh periodically rather than treating as current-day pricing.",
     asOf: "2026-08-16",
+    averagePrice: 49925,
+    recordLow: { price: 22895, note: "2013 model year, April 2023 sale" },
+    recordHigh: { price: 76500, note: "2014 model year, August 2025 sale" },
   },
 };

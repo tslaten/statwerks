@@ -52,6 +52,12 @@ export interface KnownIssue {
   whatToCheck: string[];
 }
 
+export interface PriceDatapoint {
+  price: number;
+  /** e.g. "2013 model year, April 2023 sale" */
+  note: string;
+}
+
 export interface MarketContext {
   currency: "USD";
   priceLow: number;
@@ -62,6 +68,14 @@ export interface MarketContext {
   trendSummary: string;
   /** ISO date string — when this pricing copy was last reviewed. */
   asOf: string;
+  /**
+   * Structured pricing landmarks that feed the price-range chart on the
+   * trim dashboard. All three are optional and only render the chart
+   * when present together — omit to fall back to prose-only pricing.
+   */
+  averagePrice?: number;
+  recordLow?: PriceDatapoint;
+  recordHigh?: PriceDatapoint;
 }
 
 export interface BuyingChecklist {

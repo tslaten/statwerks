@@ -81,5 +81,8 @@ export const carrera9972S: Trim = {
     trendSummary:
       "Average sale price sits around $59,300, with PDK coupes averaging roughly $57,400 — manual cars tend to command a premium. Rough or high-mile examples have traded as low as $22,750 (a 2009 model-year car), and a well-documented 2009 example reached $120,000 at a December 2022 sale — treat both ends as outliers rather than shopping targets. Runs a meaningful premium over the 997.1 Carrera S (averaging roughly $47,400) — the direct-injection engine's reliability improvements and higher output are generally reflected in the price gap.",
     asOf: "2026-08-18",
+    averagePrice: 59339,
+    recordLow: { price: 22750, note: "2009 model year" },
+    recordHigh: { price: 120000, note: "2009 model year, December 2022 sale" },
   },
 };

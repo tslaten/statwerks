@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, IBM_Plex_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { SiteSidebar } from "@/components/layout/site-sidebar";
+import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -39,15 +40,22 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const groups = getAllPlatforms().map((platform) => ({
+    platform,
+    trims: getTrimsForPlatform(platform.slug),
+  }));
+
   return (
     <html
       lang="en"
       className={`${archivo.variable} ${inter.variable} ${plexMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col font-sans antialiased">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+      <body className="min-h-full font-sans antialiased">
+        <SiteSidebar groups={groups} />
+        <div className="flex min-h-full flex-col lg:pl-72">
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );
