@@ -117,15 +117,13 @@ export default async function TrimPage({
               >
                 {platform.chassisCode}
               </span>
-              <div className="shadow-card-hover relative rounded-[2rem] border border-line bg-gradient-to-br from-surface to-surface-recessed p-6 sm:p-9">
-                <VehiclePhoto
-                  image={trim.image}
-                  fallbackLabel={`${platform.chassisCode} ${trim.name}`}
-                  className="aspect-[4/3] w-full rounded-2xl"
-                  sizes="(min-width: 1024px) 44vw, 90vw"
-                  iconSize={44}
-                />
-              </div>
+              <VehiclePhoto
+                image={trim.image}
+                fallbackLabel={`${platform.chassisCode} ${trim.name}`}
+                className="aspect-[4/3] w-full rounded-[2rem]"
+                sizes="(min-width: 1024px) 48vw, 90vw"
+                iconSize={44}
+              />
             </div>
           </div>
         </Container>
