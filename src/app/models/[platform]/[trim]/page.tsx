@@ -117,13 +117,15 @@ export default async function TrimPage({
               >
                 {platform.chassisCode}
               </span>
-              <VehiclePhoto
-                image={trim.image}
-                fallbackLabel={`${platform.chassisCode} ${trim.name}`}
-                className="aspect-[4/3] w-full rounded-[2rem]"
-                sizes="(min-width: 1024px) 48vw, 90vw"
-                iconSize={44}
-              />
+              <div className="shadow-card relative rounded-[20px] bg-surface p-5">
+                <VehiclePhoto
+                  image={trim.image}
+                  fallbackLabel={`${platform.chassisCode} ${trim.name}`}
+                  className="aspect-[4/3] w-full rounded-2xl"
+                  sizes="(min-width: 1024px) 48vw, 90vw"
+                  iconSize={44}
+                />
+              </div>
             </div>
           </div>
         </Container>

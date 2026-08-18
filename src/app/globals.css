@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — warm, light, grainy canvas with pure-white cards resting on it.
-     Kept close to white — cards separate mostly via shadow, not color delta. */
-  --canvas: #f9f8f6;         /* page background (grain applied via body) */
+  /* Surfaces — neutral, cool-leaning light gray canvas with pure-white cards
+     elevated on top via shadow (see shadow-card below), not color delta. */
+  --canvas: #e9e9e6;         /* page background (grain applied via body) */
   --surface: #ffffff;        /* cards / panels */
-  --surface-recessed: #f3f2ef; /* recessed sub-panels inside a card, spec readouts */
-  --line: #edeae3;           /* borders / dividers on white */
-  --line-strong: #dbd7cc;
+  --surface-recessed: #eaeae7; /* secondary/section bg + recessed sub-panels inside a card */
+  --line: #ececec;           /* subtle borders / dividers on white */
+  --line-strong: #dbdbd7;    /* more visible borders / dividers */
 
   /* Text */
   --ink: #1a1917;       /* primary text, warm near-black */

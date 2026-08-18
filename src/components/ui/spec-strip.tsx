@@ -16,7 +16,7 @@ export function SpecStrip({ facts }: { facts: QuickFact[] }) {
           return (
             <div
               key={fact.label}
-              className="shadow-card rounded-xl bg-surface px-4 py-3.5"
+              className="shadow-card rounded-2xl bg-surface px-4 py-3.5"
             >
               <div className="flex items-center gap-2">
                 <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-surface-recessed text-steel">
