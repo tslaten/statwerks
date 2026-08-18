@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertTriangle, Car, LayoutGrid } from "lucide-react";
 import { Container } from "@/components/layout/container";
-import { DashboardNav, type DashboardNavItem } from "@/components/ui/dashboard-nav";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -45,14 +44,6 @@ export default async function PlatformPage({
     (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]
   );
 
-  const navItems: DashboardNavItem[] = [
-    { href: "#overview", label: "Overview", icon: LayoutGrid },
-    { href: "#trims", label: "Choose a trim", icon: Car },
-    ...(sharedIssues.length > 0
-      ? [{ href: "#known-issues", label: "Known issues", icon: AlertTriangle }]
-      : []),
-  ];
-
   return (
     <>
       {platform.contentStatus === "placeholder" ? <DraftBanner /> : null}
@@ -86,61 +77,53 @@ export default async function PlatformPage({
       </header>
 
       <Container wide className="pb-14 pt-4 md:pb-20">
-        <div className="lg:flex lg:items-start lg:gap-10">
-          <aside className="mb-8 lg:mb-0 lg:w-52 lg:shrink-0">
-            <DashboardNav items={navItems} />
-          </aside>
+        <section id="overview" className="scroll-mt-24">
+          <SectionHeading index="00" title="Overview" icon={LayoutGrid} />
+          <SpecStrip facts={platform.overview.quickFacts} />
+        </section>
 
-          <div className="lg:min-w-0 lg:flex-1">
-            <section id="overview" className="scroll-mt-28">
-              <SectionHeading index="00" title="Overview" icon={LayoutGrid} />
-              <SpecStrip facts={platform.overview.quickFacts} />
-            </section>
-
-            <section
-              id="trims"
-              aria-labelledby="trims"
-              className="mt-16 scroll-mt-28 md:mt-20"
-            >
-              <SectionHeading
-                index="01"
-                title="Choose a trim"
-                icon={Car}
-                aside={`${trims.length} trim${trims.length === 1 ? "" : "s"}`}
-              />
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {trims.map((trim) => (
-                  <TrimCard key={trim.slug} platform={platform} trim={trim} />
-                ))}
-              </div>
-            </section>
-
-            {sharedIssues.length > 0 ? (
-              <section
-                id="known-issues"
-                aria-labelledby="known-issues"
-                className="mt-16 scroll-mt-28 md:mt-20"
-              >
-                <SectionHeading
-                  index="02"
-                  title="Known across every trim"
-                  icon={AlertTriangle}
-                  aside={`${sharedIssues.length} flagged`}
-                />
-                <p className="mb-6 max-w-2xl text-sm leading-relaxed text-steel">
-                  These apply platform-wide, regardless of trim. Each
-                  trim&apos;s own dashboard adds anything specific to that
-                  engine/spec variant.
-                </p>
-                <div className="max-w-3xl space-y-4">
-                  {sharedIssues.map((issue) => (
-                    <KnownIssueRow key={issue.id} issue={issue} />
-                  ))}
-                </div>
-              </section>
-            ) : null}
+        <section
+          id="trims"
+          aria-labelledby="trims"
+          className="mt-16 scroll-mt-24 md:mt-20"
+        >
+          <SectionHeading
+            index="01"
+            title="Choose a trim"
+            icon={Car}
+            aside={`${trims.length} trim${trims.length === 1 ? "" : "s"}`}
+          />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {trims.map((trim) => (
+              <TrimCard key={trim.slug} platform={platform} trim={trim} />
+            ))}
           </div>
-        </div>
+        </section>
+
+        {sharedIssues.length > 0 ? (
+          <section
+            id="known-issues"
+            aria-labelledby="known-issues"
+            className="mt-16 scroll-mt-24 md:mt-20"
+          >
+            <SectionHeading
+              index="02"
+              title="Known across every trim"
+              icon={AlertTriangle}
+              aside={`${sharedIssues.length} flagged`}
+            />
+            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-steel">
+              These apply platform-wide, regardless of trim. Each
+              trim&apos;s own dashboard adds anything specific to that
+              engine/spec variant.
+            </p>
+            <div className="max-w-3xl space-y-4">
+              {sharedIssues.map((issue) => (
+                <KnownIssueRow key={issue.id} issue={issue} />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </Container>
     </>
   );

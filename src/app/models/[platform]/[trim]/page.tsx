@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { AlertTriangle, ClipboardList, DollarSign, LayoutGrid } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { ChecklistGroup } from "@/components/ui/checklist-group";
-import { DashboardNav } from "@/components/ui/dashboard-nav";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
@@ -45,13 +44,6 @@ export async function generateMetadata({
     },
   };
 }
-
-const NAV_ITEMS = [
-  { href: "#overview", label: "Overview", icon: LayoutGrid },
-  { href: "#known-issues", label: "Known issues", icon: AlertTriangle },
-  { href: "#market-context", label: "Market pricing", icon: DollarSign },
-  { href: "#checklist", label: "Buying checklist", icon: ClipboardList },
-];
 
 export default async function TrimPage({
   params,
@@ -134,80 +126,70 @@ export default async function TrimPage({
       </header>
 
       <Container wide className="pb-14 pt-4 md:pb-20">
-        <div className="lg:flex lg:items-start lg:gap-10">
-          <aside className="mb-8 lg:mb-0 lg:w-52 lg:shrink-0">
-            <DashboardNav items={NAV_ITEMS} />
-          </aside>
-
-          <div className="lg:min-w-0 lg:flex-1">
-            <section id="overview" className="scroll-mt-28">
-              <SectionHeading index="00" title="Overview" icon={LayoutGrid} />
-              <SpecStrip facts={quickFacts} />
-              <div className="shadow-card mt-5 rounded-2xl bg-surface p-5">
-                <p className="label-mono mb-3 text-steel-dim">
-                  Known-issue mix
-                </p>
-                <SeverityMixBar counts={severityCounts} />
-              </div>
-            </section>
-
-            <section
-              id="known-issues"
-              aria-labelledby="known-issues"
-              className="mt-16 scroll-mt-28 md:mt-20"
-            >
-              <SectionHeading
-                index="01"
-                title="Known issues"
-                icon={AlertTriangle}
-                aside={`${issues.length} flagged · ${criticalCount} critical`}
-              />
-              <div className="max-w-3xl space-y-4">
-                {issues.map((issue) => (
-                  <KnownIssueRow key={issue.id} issue={issue} />
-                ))}
-              </div>
-            </section>
-
-            <section
-              id="market-context"
-              aria-labelledby="market-context"
-              className="mt-16 scroll-mt-28 md:mt-20"
-            >
-              <SectionHeading
-                index="02"
-                title="Market pricing context"
-                icon={DollarSign}
-              />
-              <div className="max-w-3xl">
-                <MarketContextPanel context={trim.marketContext} />
-              </div>
-            </section>
-
-            <section
-              id="checklist"
-              aria-labelledby="checklist"
-              className="mt-16 scroll-mt-28 md:mt-20"
-            >
-              <SectionHeading
-                index="03"
-                title="Buying checklist"
-                icon={ClipboardList}
-              />
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-                <ChecklistGroup
-                  title="Documents to request"
-                  items={checklist.documentsToRequest}
-                />
-                <ChecklistGroup
-                  title="Questions for the seller"
-                  items={checklist.questionsForSeller}
-                />
-                <ChecklistGroup title="PPI advice" items={checklist.ppiAdvice} />
-              </div>
-            </section>
+        <section id="overview" className="scroll-mt-24">
+          <SectionHeading index="00" title="Overview" icon={LayoutGrid} />
+          <SpecStrip facts={quickFacts} />
+          <div className="shadow-card mt-5 rounded-2xl bg-surface p-5">
+            <p className="label-mono mb-3 text-steel-dim">Known-issue mix</p>
+            <SeverityMixBar counts={severityCounts} />
           </div>
+        </section>
+
+        <div className="mt-16 grid grid-cols-1 gap-10 md:mt-20 lg:grid-cols-2 lg:gap-12">
+          <section
+            id="known-issues"
+            aria-labelledby="known-issues"
+            className="scroll-mt-24"
+          >
+            <SectionHeading
+              index="01"
+              title="Known issues"
+              icon={AlertTriangle}
+              aside={`${issues.length} flagged · ${criticalCount} critical`}
+            />
+            <div className="space-y-4">
+              {issues.map((issue) => (
+                <KnownIssueRow key={issue.id} issue={issue} />
+              ))}
+            </div>
+          </section>
+
+          <section
+            id="market-context"
+            aria-labelledby="market-context"
+            className="scroll-mt-24"
+          >
+            <SectionHeading
+              index="02"
+              title="Market pricing context"
+              icon={DollarSign}
+            />
+            <MarketContextPanel context={trim.marketContext} />
+          </section>
         </div>
+
+        <section
+          id="checklist"
+          aria-labelledby="checklist"
+          className="mt-16 scroll-mt-24 md:mt-20"
+        >
+          <SectionHeading
+            index="03"
+            title="Buying checklist"
+            icon={ClipboardList}
+          />
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <ChecklistGroup
+              title="Documents to request"
+              items={checklist.documentsToRequest}
+            />
+            <ChecklistGroup
+              title="Questions for the seller"
+              items={checklist.questionsForSeller}
+            />
+            <ChecklistGroup title="PPI advice" items={checklist.ppiAdvice} />
+          </div>
+        </section>
       </Container>
     </>
   );
