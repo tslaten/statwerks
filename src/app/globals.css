@@ -3,9 +3,9 @@
 :root {
   /* Surfaces — neutral, cool-leaning light gray canvas with pure-white cards
      elevated on top via shadow (see shadow-card below), not color delta. */
-  --canvas: #f1f1ef;         /* page background (grain applied via body) */
+  --canvas: #f6f6f4;         /* page background (grain applied via body) */
   --surface: #ffffff;        /* cards / panels */
-  --surface-recessed: #f2f2f0; /* secondary/section bg + recessed sub-panels inside a card */
+  --surface-recessed: #f7f7f5; /* secondary/section bg + recessed sub-panels inside a card */
   --line: #ececec;           /* subtle borders / dividers on white */
   --line-strong: #dbdbd7;    /* more visible borders / dividers */
 
