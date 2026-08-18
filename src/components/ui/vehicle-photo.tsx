@@ -15,6 +15,7 @@ export function VehiclePhoto({
   sizes = "(min-width: 1024px) 24rem, 90vw",
   iconSize = 28,
   bordered = true,
+  objectPosition = "center",
 }: {
   image?: VehicleImage;
   /** Name shown in the placeholder state, e.g. "981 Cayman S" */
@@ -25,6 +26,9 @@ export function VehiclePhoto({
   /** Placeholder only: dashed border + rounded corners. Turn off when a
       parent already clips/rounds the box (e.g. a card with overflow-hidden). */
   bordered?: boolean;
+  /** Where the car sits within its box when the box's aspect ratio doesn't
+      match the image's — e.g. "bottom" to anchor it just above an overlay. */
+  objectPosition?: string;
 }) {
   if (image) {
     return (
@@ -34,7 +38,7 @@ export function VehiclePhoto({
           alt={image.alt}
           fill
           sizes={sizes}
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "contain", objectPosition }}
         />
       </div>
     );
