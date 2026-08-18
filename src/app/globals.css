@@ -3,9 +3,9 @@
 :root {
   /* Surfaces — neutral, cool-leaning light gray canvas with pure-white cards
      elevated on top via shadow (see shadow-card below), not color delta. */
-  --canvas: #e9e9e6;         /* page background (grain applied via body) */
+  --canvas: #f1f1ef;         /* page background (grain applied via body) */
   --surface: #ffffff;        /* cards / panels */
-  --surface-recessed: #eaeae7; /* secondary/section bg + recessed sub-panels inside a card */
+  --surface-recessed: #f2f2f0; /* secondary/section bg + recessed sub-panels inside a card */
   --line: #ececec;           /* subtle borders / dividers on white */
   --line-strong: #dbdbd7;    /* more visible borders / dividers */
 
@@ -48,9 +48,11 @@
 @layer base {
   body {
     background-color: var(--canvas);
-    /* Fine film-grain noise (SVG feTurbulence), baked to a low-alpha black
-       so it reads as texture on the canvas, not as a visible pattern. */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    /* Film-grain noise (SVG feTurbulence), baked to a low-alpha black so it
+       reads as texture on the canvas, not a visible pattern. Two octaves
+       give the noise some per-pixel alpha spikes instead of a flat, even
+       hum — that's most of what makes it read as grain rather than fog. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     color: var(--ink);
   }
