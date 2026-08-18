@@ -12,6 +12,15 @@ import type { Platform } from "../types";
  * light condensation). The previous "exhaust flap & AOS" entry isn't
  * part of the curated source and has been dropped rather than carried
  * forward unverified.
+ *
+ * Updated again August 2026 with a revised source document: bore
+ * scoring is walked back from Clear to Watch. It's still true the
+ * 9A1's DFI design eliminates the 997.1's *IMS-bearing-driven* bore
+ * wear mechanism, but the revised research is explicit that the 9A1
+ * can develop bore scoring through a different mechanism (cylinder
+ * bore shrinkage / AlSi coating breakdown) at a meaningfully lower —
+ * but non-zero — rate. Treating it as fully solved was premature; see
+ * PR discussion for the source.
  */
 export const carrera9972: Platform = {
   slug: "997-2-carrera",
@@ -27,7 +36,7 @@ export const carrera9972: Platform = {
     layout: "Rear-engine, rear-wheel drive",
     body: "2dr coupe / cabriolet",
     summary:
-      "The 997.2 is a substantial mid-cycle update to the 997, not just a facelift: it replaced the 997.1's M97 engine family with a new direct-injection 9A1 design, introduced Porsche's 7-speed PDK dual-clutch transmission alongside the manual, and — critically for buyers — eliminated the intermediate shaft entirely, which removes both of the 997.1's headline engine risks, IMS bearing failure and bore-scoring susceptibility, in one architecture change. Specialist and enthusiast consensus treats it as the most significantly improved facelift in 911 history, not a cosmetic refresh: even the LED tail lights and updated PCM sit on top of a genuinely different engine underneath. Every 997.2 Carrera shares the same coolant system, fuel-delivery hardware, and RMS wear pattern regardless of trim — engine-displacement-specific detail lives on each trim's own page.",
+      "The 997.2 is a substantial mid-cycle update to the 997, not just a facelift: it replaced the 997.1's M97 engine family with a new direct-injection 9A1 design, introduced Porsche's 7-speed PDK dual-clutch transmission alongside the manual, and — critically for buyers — eliminated the intermediate shaft entirely, which removes IMS bearing failure, the defining 997.1 risk, outright. Bore scoring is a more nuanced story: the 9A1 can still develop it, just through a different mechanism than the M97 (cylinder bore shrinkage or breakdown of the aluminum-silicon cylinder coating, rather than IMS-related causes), and at a meaningfully lower rate — reduced, not solved. Specialist and enthusiast consensus still treats it as the most significantly improved facelift in 911 history, not a cosmetic refresh: even the LED tail lights and updated PCM sit on top of a genuinely different engine underneath. Every 997.2 Carrera shares the same coolant system, fuel-delivery hardware, and RMS wear pattern regardless of trim — engine-displacement-specific detail lives on each trim's own page.",
     quickFacts: [
       { label: "Production", value: "2009–2012" },
       { label: "Chassis code", value: "997.2" },
@@ -49,16 +58,17 @@ export const carrera9972: Platform = {
       ],
     },
     {
-      id: "bore-scoring-reduced",
-      title: "Bore scoring risk — greatly reduced versus 997.1",
-      severity: "clear",
+      id: "bore-scoring-reduced-not-eliminated",
+      title: "Bore scoring — reduced risk versus 997.1, but not eliminated",
+      severity: "watch",
       summary:
-        "The direct-injection engine design greatly reduces the bore-scoring risk associated with the earlier M96/M97 engines.",
+        "The 9A1 engine can still develop bore scoring, via a different mechanism than the 997.1's M97 — meaningfully rarer, but a documented, real risk.",
       detail:
-        "Bore scoring — wear on the cylinder walls that shows up as rising oil consumption and blue smoke on a cold start — was a real, if inconsistently documented, concern on the 997.1's M97 engines. The 997.2's 9A1 design isn't declared entirely zero-risk industry-wide for this engine family, but it is not a documented common failure pattern for this generation the way it was for the 997.1.",
+        "Bore scoring on the 997.1's M97 engines is tied to intermediate-shaft-related causes; the 9A1's version is different — cylinder bore shrinkage or breakdown of the aluminum-silicon cylinder coating — but it is a documented failure mode, not a solved problem, even though specialist and owner consensus puts the failure rate meaningfully below the M97's. Symptoms are the same as on earlier engines: rising oil consumption and blue smoke on a cold start, with a confirmed case meaning a shortblock rebuild or replacement. More frequent oil changes using a moly-additive oil are commonly recommended as a preventative measure.",
       whatToCheck: [
-        "No borescope inspection needed as a matter of routine — this isn't a documented common failure pattern for the 9A1 engine",
-        "Still worth a cold-start listen and a look at oil-consumption history as standard PPI diligence, not because of a known pattern",
+        "Get a borescope inspection of all six cylinder bores during PPI — don't skip this just because it's a direct-injection engine",
+        "Cold start the car yourself and listen for excessive piston slap or rattle that clears within ~30 seconds",
+        "Ask about oil-change intervals and whether a moly-additive oil has been used",
       ],
     },
     {
@@ -142,7 +152,8 @@ export const carrera9972: Platform = {
       "Has a pre-purchase inspection ever been done, and can you share the results?",
     ],
     ppiAdvice: [
-      "Confirm no IMS bearing or bore-scoring concern applies — don't pay for or accept an \"IMS inspection\" upsell on this generation",
+      "Confirm no IMS bearing concern applies — don't pay for or accept an \"IMS inspection\" upsell on this generation, since the 9A1 has no intermediate shaft",
+      "Get a borescope inspection of the cylinders during PPI — bore scoring is a documented, real risk on this engine (lower rate than the 997.1's M97, but not eliminated)",
       "Cold start test: listen for metallic ticking or knocking in the first ~30 seconds that fades as the engine warms",
       "Check the cooling system for leaks or evidence of prior repairs",
       "Inspect the rear main seal area for oil seepage, and the LED tail light housings for internal condensation",

@@ -76,28 +76,28 @@ export default async function TrimPage({
 
       <header>
         <Container wide className="pb-10 pt-12 md:pt-16">
-          <div className="md:flex md:items-start md:justify-between md:gap-12">
-            <div className="md:max-w-2xl">
-              <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
-                <Link href="/models" className="transition-colors hover:text-ink">
-                  Models
-                </Link>
-                <span aria-hidden>/</span>
-                <Link
-                  href={`/models/${platform.slug}`}
-                  className="transition-colors hover:text-ink"
-                >
-                  {platform.shortName}
-                </Link>
-                <span aria-hidden>/</span>
-                <span className="text-steel">{trim.shortName}</span>
-              </nav>
+          <nav className="label-mono flex flex-wrap items-center gap-2 text-steel-dim">
+            <Link href="/models" className="transition-colors hover:text-ink">
+              Models
+            </Link>
+            <span aria-hidden>/</span>
+            <Link
+              href={`/models/${platform.slug}`}
+              className="transition-colors hover:text-ink"
+            >
+              {platform.shortName}
+            </Link>
+            <span aria-hidden>/</span>
+            <span className="text-steel">{trim.shortName}</span>
+          </nav>
 
-              <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          <div className="mt-6 lg:grid lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
+            <div className="lg:max-w-xl">
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
                 <span className="label-mono text-steel-dim">
                   {platform.chassisCode}
                 </span>
-                <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
+                <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl lg:text-6xl">
                   {platform.chassisCode} {trim.name}
                 </h1>
               </div>
@@ -110,12 +110,23 @@ export default async function TrimPage({
               </p>
             </div>
 
-            <VehiclePhoto
-              image={trim.image}
-              fallbackLabel={`${platform.chassisCode} ${trim.name}`}
-              className="mt-8 aspect-[4/3] w-full md:mt-0 md:w-96 md:shrink-0"
-              iconSize={36}
-            />
+            <div className="relative mt-12 lg:mt-0">
+              <span
+                aria-hidden
+                className="text-stretch pointer-events-none absolute -top-10 left-0 select-none font-display text-[6rem] font-bold leading-none text-ink/[0.04] sm:text-[8rem] lg:-top-14 lg:text-[9rem]"
+              >
+                {platform.chassisCode}
+              </span>
+              <div className="shadow-card-hover relative rounded-[2rem] border border-line bg-gradient-to-br from-surface to-surface-recessed p-6 sm:p-9">
+                <VehiclePhoto
+                  image={trim.image}
+                  fallbackLabel={`${platform.chassisCode} ${trim.name}`}
+                  className="aspect-[4/3] w-full rounded-2xl"
+                  sizes="(min-width: 1024px) 44vw, 90vw"
+                  iconSize={44}
+                />
+              </div>
+            </div>
           </div>
         </Container>
       </header>
