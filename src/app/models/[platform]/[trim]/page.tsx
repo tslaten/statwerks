@@ -117,15 +117,17 @@ export default async function TrimPage({
               >
                 {platform.chassisCode}
               </span>
-              <div className="shadow-card relative rounded-[20px] bg-surface p-5">
-                <VehiclePhoto
-                  image={trim.image}
-                  fallbackLabel={`${platform.chassisCode} ${trim.name}`}
-                  className="aspect-[4/3] w-full rounded-2xl"
-                  sizes="(min-width: 1024px) 48vw, 90vw"
-                  iconSize={44}
-                />
-              </div>
+              {/* No card/frame around this image — asked for twice. Don't
+                  wrap it in a shadow-card/bg-surface panel even if a future
+                  generic "every card gets elevation" pass seems to call for
+                  it; this element is an explicit exception. */}
+              <VehiclePhoto
+                image={trim.image}
+                fallbackLabel={`${platform.chassisCode} ${trim.name}`}
+                className="aspect-[4/3] w-full rounded-[20px]"
+                sizes="(min-width: 1024px) 48vw, 90vw"
+                iconSize={44}
+              />
             </div>
           </div>
         </Container>
