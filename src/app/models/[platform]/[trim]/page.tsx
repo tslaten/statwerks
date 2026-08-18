@@ -7,7 +7,7 @@ import { ChecklistGroup } from "@/components/ui/checklist-group";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { MarketContextPanel } from "@/components/ui/market-context-panel";
-import { PopularOptionsGrid } from "@/components/ui/popular-options-grid";
+import { PopularOptionsList } from "@/components/ui/popular-options-list";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { countBySeverity } from "@/components/ui/spec-plate-card";
 import { SpecStrip } from "@/components/ui/spec-strip";
@@ -181,7 +181,7 @@ export default async function TrimPage({
               icon={Tag}
               aside={`${trim.popularOptions.length} tracked`}
             />
-            <PopularOptionsGrid
+            <PopularOptionsList
               options={trim.popularOptions}
               note={trim.optionsNote}
             />

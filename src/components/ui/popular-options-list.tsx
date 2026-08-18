@@ -18,7 +18,8 @@ const TAG_LABEL: Record<OptionTag, string> = {
   standard: "Standard",
 };
 
-export function PopularOptionsGrid({
+/** One card, a row per option — name + note left, desirability tag right. */
+export function PopularOptionsList({
   options,
   note,
 }: {
@@ -28,31 +29,33 @@ export function PopularOptionsGrid({
   if (options.length === 0) return null;
 
   return (
-    <div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {options.map((option) => (
+    <div className="shadow-card rounded-2xl bg-surface p-6 md:p-7">
+      <div>
+        {options.map((option, i) => (
           <div
             key={option.id}
-            className="shadow-card rounded-2xl bg-surface p-5"
+            className={`flex items-start justify-between gap-5 py-4 first:pt-0 last:pb-0 ${
+              i < options.length - 1 ? "border-b border-line" : ""
+            }`}
           >
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="font-display text-base font-medium text-ink">
+            <div>
+              <p className="text-[0.9375rem] font-medium text-ink">
                 {option.name}
-              </h3>
-              <span
-                className={`label-mono shrink-0 rounded-full px-2.5 py-1 ${TAG_STYLE[option.tag]}`}
-              >
-                {TAG_LABEL[option.tag]}
-              </span>
+              </p>
+              <p className="mt-1 max-w-2xl text-sm leading-relaxed text-steel">
+                {option.note}
+              </p>
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-steel">
-              {option.note}
-            </p>
+            <span
+              className={`label-mono mt-0.5 shrink-0 rounded-full px-2.5 py-1 ${TAG_STYLE[option.tag]}`}
+            >
+              {TAG_LABEL[option.tag]}
+            </span>
           </div>
         ))}
       </div>
       {note ? (
-        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-steel-dim">
+        <p className="mt-2 border-t border-line pt-4 text-xs leading-relaxed text-steel-dim">
           {note}
         </p>
       ) : null}
