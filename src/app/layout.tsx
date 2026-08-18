@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, IBM_Plex_Mono } from "next/font/google";
+import { AppShell } from "@/components/layout/app-shell";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteSidebar } from "@/components/layout/site-sidebar";
 import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
 import "./globals.css";
 
@@ -51,11 +51,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${archivo.variable} ${inter.variable} ${plexMono.variable} h-full`}
     >
       <body className="min-h-full font-sans antialiased">
-        <SiteSidebar groups={groups} />
-        <div className="flex min-h-full flex-col lg:pl-72">
+        <AppShell groups={groups}>
           <main className="flex-1">{children}</main>
           <SiteFooter />
-        </div>
+        </AppShell>
       </body>
     </html>
   );
