@@ -10,6 +10,15 @@ import type { Trim } from "../types";
  * bore scoring as a Critical, trim-specific risk; this pass found no
  * documented S-specific failure pattern, so that entry was replaced —
  * see PR/commit history for the full discussion.
+ *
+ * Updated again August 2026: bore scoring itself is now a genuine
+ * platform-wide Watch item (see the 981 Cayman platform file) rather
+ * than dismissed as forum noise. This trim's own copy is updated to
+ * point at that item and note the still-open question of whether the
+ * S's larger-bore engine carries materially higher relative risk than
+ * base — real-world case data doesn't show a clear difference, so
+ * this stays a Clear, no-dominant-trim-specific-pattern entry rather
+ * than a trim-level flag of its own.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -48,12 +57,12 @@ export const cayman981S: Trim = {
       title: "No dominant trim-specific failure pattern identified",
       severity: "clear",
       summary:
-        "Beyond the platform-wide issues every 981 shares, owner and forum consensus doesn't point to an S-specific mechanical weak point — including bore scoring, which sometimes comes up in enthusiast discussion but isn't a documented pattern on this engine.",
+        "Beyond the platform-wide issues every 981 shares, owner and forum consensus doesn't point to an S-specific mechanical weak point — bore scoring included, though whether the S's larger bore carries extra relative risk is an open question, not a settled one.",
       detail:
-        "Most reported problems on the Cayman S are isolated/one-off rather than a documented pattern tied to the 3.4L MA1.23 engine specifically. This is worth stating explicitly rather than leaving it implied: it means most of your PPI budget and attention should go toward the platform-wide items and standard wear-and-tear checks (brakes, tires, clutch if manual), not chasing a rumored engine-specific defect.",
+        "Most reported problems on the Cayman S are isolated/one-off rather than a documented pattern tied to the 3.4L MA1.23 engine specifically. On bore scoring — a real, if rare, risk across the whole 981 platform (see the platform page) — some specialists suggest the S's larger-bore engine carries slightly higher relative risk than base by the same logic that applied to older M97 engines, but real-world case data collected on owner forums hasn't shown a clear base-vs-S difference in practice. Because there's no major, common, catastrophic-failure pattern specific to the S, negotiation leverage mostly comes from platform-wide wear items (strut mounts, condenser condition), confirming a clean borescope result, and standard PPI findings (brakes, tires, clutch if manual) rather than a documented widespread mechanical weak point.",
       whatToCheck: [
-        "Focus PPI time on the platform-wide known issues and standard mechanical/wear checks rather than one specific engine fear",
-        "Be skeptical of a shop or seller who leads with a dramatic engine-specific warning not reflected in the platform's known issues",
+        "Get a borescope inspection of the cylinder bores during PPI — treat this as standard, not optional, given the open base-vs-S question",
+        "Focus the rest of PPI time on the platform-wide known issues and standard mechanical/wear checks rather than a rumored engine-specific defect",
       ],
     },
   ],

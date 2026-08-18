@@ -5,6 +5,14 @@ import type { Platform } from "../types";
  * the site owner (public sale/owner-forum aggregation), incorporated
  * verbatim where possible. Supersedes an earlier auto-researched pass —
  * see PR/commit history for what changed and why.
+ *
+ * Updated again August 2026: added "bore-scoring-rare" as a genuine
+ * platform-wide Watch item. The earlier pass treated bore scoring as
+ * enthusiast-forum noise with no documented pattern on this engine
+ * family; the owner's revised research is explicit that it's rare but
+ * real on the 981's MA1 direct-injection engine, correlated with
+ * cold-engine hard driving and infrequent oil changes. Mirrors the
+ * same walk-back already made on the 997.2 Carrera platform page.
  */
 export const cayman981: Platform = {
   slug: "981-cayman",
@@ -98,6 +106,20 @@ export const cayman981: Platform = {
       ],
     },
     {
+      id: "bore-scoring-rare",
+      title: "Bore scoring — rare, but real on this engine family",
+      severity: "watch",
+      summary:
+        "The 981's direct-injection MA1 engine can develop bore scoring — genuinely rare, but real, and correlated with hard driving on a cold engine plus infrequent oil changes.",
+      detail:
+        "Documented cases are rare relative to the IMS/bore-scoring problems that plagued older M96/M97-engined Porsches, but they do happen. Specialists differ on whether the S's larger-bore engine carries materially higher risk than the base Cayman's, and real-world case data collected on owner forums hasn't shown a clear difference between them in practice — treat that specific question as open rather than settled. A borescope inspection during PPI and a close look at oil-change history are the standard mitigations; this isn't a reason to avoid the car, but it shouldn't be dismissed as a nonissue either.",
+      whatToCheck: [
+        "Get a borescope inspection of all six cylinder bores during PPI",
+        "Ask about oil-change frequency and whether the car has regularly been driven hard on a cold engine",
+        "Cold start the car yourself and listen for excessive piston slap or rattle that clears within ~30 seconds",
+      ],
+    },
+    {
       id: "strut-mount-bushing",
       title: "Front/rear strut mount bushing wear",
       severity: "clear",
@@ -138,6 +160,7 @@ export const cayman981: Platform = {
       "Has a pre-purchase inspection ever been done, and can you share the results?",
     ],
     ppiAdvice: [
+      "Get a borescope inspection of the cylinders during PPI — bore scoring is rare on this engine but documented, and cold-start hard driving plus poor oil-change history are the main risk correlators",
       "Confirm bonnet catch recall completion via VIN if the build date falls between May 5 – June 6, 2014",
       "Test blower motor / HVAC function on all speeds, especially if the car has been sitting",
       "Check for PADM-related fault codes if the car is so equipped, and verify wiring/connectors before accepting a mount-replacement quote",
