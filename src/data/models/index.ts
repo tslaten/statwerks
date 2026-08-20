@@ -2,10 +2,14 @@ import { cayman981 } from "./platforms/981-cayman";
 import { carrera9911 } from "./platforms/991-1-carrera";
 import { carrera9972 } from "./platforms/997-2-carrera";
 import { gt39972 } from "./platforms/997-2-gt3";
+import { carrera996 } from "./platforms/996-carrera";
+import { cayman718 } from "./platforms/718-cayman";
 import { carrera9911S } from "./trims/991-1-carrera-s";
 import { cayman981S } from "./trims/981-cayman-s";
 import { carrera9972S } from "./trims/997-2-carrera-s";
 import { gt39972Trim } from "./trims/997-2-gt3";
+import { carrera996Base } from "./trims/996-carrera-base";
+import { cayman718S } from "./trims/718-cayman-s";
 import {
   SEVERITY_ORDER,
   type BuyingChecklist,
@@ -18,13 +22,27 @@ import {
 export * from "./types";
 
 /** Every platform (generation) the site knows about. */
-export const platforms: Platform[] = [cayman981, carrera9972, carrera9911, gt39972];
+export const platforms: Platform[] = [
+  cayman981,
+  carrera9972,
+  carrera9911,
+  gt39972,
+  carrera996,
+  cayman718,
+];
 
 /**
  * Every trim the site knows about, each pointing back at a platform via
  * `platformSlug`. Add a new trim here — nothing above needs to change.
  */
-export const trims: Trim[] = [cayman981S, carrera9972S, carrera9911S, gt39972Trim];
+export const trims: Trim[] = [
+  cayman981S,
+  carrera9972S,
+  carrera9911S,
+  gt39972Trim,
+  carrera996Base,
+  cayman718S,
+];
 
 export function getAllPlatforms(): Platform[] {
   return platforms;
