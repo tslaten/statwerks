@@ -27,11 +27,15 @@ import type { Trim } from "../types";
  * already here — no other fields changed.
  *
  * Updated again August 2026: swapped in a user-supplied 3/4-front
- * illustration (background-removed via the same rembg pipeline as the
- * other trims), replacing the earlier side-profile shot. This now
- * matches the 997.2 GT3 image's framing; the 997.2 Carrera S image is
- * the one that's still side-profile — see that trim file if
- * normalizing all three to one angle matters later.
+ * illustration, replacing the earlier side-profile shot — first pass
+ * ran it through the rembg background-removal pipeline used for other
+ * trims, but the user asked for the original scene as-is instead (car
+ * parked in front of a modern house), so that processing was undone
+ * and the raw supplied file is used directly. This is now a visual
+ * outlier next to the isolated-car cutouts used elsewhere in the card
+ * grid (997.2 Carrera S is side-profile/cutout; 997.2 GT3 is also now
+ * a full unprocessed scene) — an intentional inconsistency per the
+ * user's explicit instruction, not an oversight.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -43,7 +47,7 @@ export const cayman981S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/981-cayman/s.png",
-    alt: "981 Cayman S, white, three-quarter front view",
+    alt: "981 Cayman S, white, three-quarter front view, parked in front of a modern house",
   },
 
   overview: {

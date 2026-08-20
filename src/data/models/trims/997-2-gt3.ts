@@ -12,12 +12,15 @@ import type { Trim } from "../types";
  * code, so that ambiguity is stated plainly rather than picking one
  * to look more authoritative than the research supports.
  *
- * Vehicle image: a user-supplied illustration, background-removed and
- * cropped via the same rembg pipeline used for the other trims. Note
- * it's a 3/4-front angle rather than the side-profile crop the other
- * two trim images use — flagged as a framing inconsistency in the
- * card grid, not silently normalized to match, since the user
- * supplied this image directly and asked for it as-is.
+ * Vehicle image: a user-supplied illustration, used as-is at the
+ * user's explicit request — no background removal or cropping (an
+ * earlier pass had run it through the rembg pipeline used for other
+ * trims; the user asked for the original scene, letterbox bars and
+ * all, instead). It's a full scenic composition (mountain road
+ * background) rather than the isolated-car cutout the other trim
+ * images use — flagged as a visual inconsistency in the card grid,
+ * not silently normalized, since the user supplied this image
+ * directly and asked for it unprocessed.
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",
@@ -29,7 +32,7 @@ export const gt39972Trim: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/997-2-gt3/gt3.png",
-    alt: "997.2 GT3, red, three-quarter front view",
+    alt: "997.2 GT3, red, three-quarter front view, parked on a mountain road",
   },
 
   overview: {
