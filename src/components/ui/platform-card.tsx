@@ -32,7 +32,6 @@ export function PlatformCard({
   return (
     <SpecPlateCard
       href={href}
-      kicker={platform.chassisCode}
       meta={platform.overview.years}
       title={title}
       teaser={teaser}

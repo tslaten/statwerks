@@ -11,12 +11,12 @@ export interface SeverityCount {
 
 /**
  * Shared spec-plate visual for platform and trim cards — a link styled
- * like a build-sheet entry: vehicle photo (or placeholder), kicker/meta
- * readout, teaser, severity preview, and a CTA row.
+ * like a build-sheet entry: vehicle photo (or placeholder), title, an
+ * optional meta line underneath (year range, power, etc.), teaser,
+ * severity preview, and a CTA row.
  */
 export function SpecPlateCard({
   href,
-  kicker,
   meta,
   title,
   teaser,
@@ -27,7 +27,6 @@ export function SpecPlateCard({
   image,
 }: {
   href: string;
-  kicker: string;
   meta?: string;
   title: string;
   teaser: string;
@@ -61,17 +60,12 @@ export function SpecPlateCard({
           className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface-recessed to-transparent"
         />
         <div className="glass absolute inset-x-0 bottom-0 p-4">
-          <div className="flex items-start justify-between">
-            <span className="text-stretch font-display text-lg font-semibold text-ink">
-              {kicker}
-            </span>
-            {meta ? (
-              <span className="label-mono pt-1 text-steel-dim">{meta}</span>
-            ) : null}
-          </div>
-          <h3 className="mt-1.5 font-display text-lg font-medium text-ink">
+          <h3 className="text-stretch font-display text-lg font-semibold text-ink">
             {title}
           </h3>
+          {meta ? (
+            <p className="label-mono mt-1 text-steel-dim">{meta}</p>
+          ) : null}
           <p className="mt-1.5 line-clamp-1 text-sm leading-relaxed text-steel">
             {teaser}
           </p>

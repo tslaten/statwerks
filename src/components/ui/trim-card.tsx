@@ -14,7 +14,6 @@ export function TrimCard({
   return (
     <SpecPlateCard
       href={`/models/${platform.slug}/${trim.slug}`}
-      kicker={trim.slug.toUpperCase()}
       meta={trim.overview.power}
       title={trim.name}
       teaser={trim.teaser}
