@@ -19,8 +19,11 @@ import type { Trim } from "../types";
  * DFI" since the source itself notes sources vary between that and
  * MA1.75/9A2 — reflecting the ambiguity rather than picking one.
  *
- * No vehicle image supplied for this trim yet — the page renders the
- * standard "Image pending" placeholder until one is sourced.
+ * Vehicle image: a user-supplied illustration (silver, 3/4-front,
+ * parked in a garage), used as-is — no background removal or
+ * cropping, matching the treatment settled on for the other three
+ * trims with real photos. `image.fit` is set to "cover" so it fills
+ * its box edge-to-edge rather than letterboxing inside it.
  *
  * `marketContext.priceLow`/`priceHigh` (the "typical asking price"
  * band) are this project's own synthesis around the source's average/
@@ -35,6 +38,11 @@ export const carrera9911S: Trim = {
   teaser:
     "The most popular 911 variant globally — the last naturally aspirated Carrera S before turbocharging arrived.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/991-1-carrera/s.png",
+    alt: "991.1 Carrera S, silver, three-quarter front view, parked in a garage",
+    fit: "cover",
+  },
 
   overview: {
     engine: "3.8L flat-six, naturally aspirated (direct injection)",
