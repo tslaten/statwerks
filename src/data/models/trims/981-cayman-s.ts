@@ -31,13 +31,12 @@ import type { Trim } from "../types";
  * ran it through the rembg background-removal pipeline used for other
  * trims, but the user asked for the original scene as-is instead (car
  * parked in front of a modern house), so that processing was undone
- * and the raw supplied file is used directly. This is now a visual
- * outlier next to the isolated-car cutouts used elsewhere in the card
- * grid (997.2 Carrera S is side-profile/cutout; 997.2 GT3 is also now
- * a full unprocessed scene) — an intentional inconsistency per the
- * user's explicit instruction, not an oversight. `image.fit` is set
- * to "cover" (rather than the default "contain") so this full scene
- * fills its box edge-to-edge instead of letterboxing inside it.
+ * and the raw supplied file is used directly. `image.fit` is set to
+ * "cover" (rather than the default "contain") so this full scene
+ * fills its box edge-to-edge instead of letterboxing inside it. (The
+ * 997.2 Carrera S and 997.2 GT3 trims were later swapped to the same
+ * unprocessed-full-scene treatment, so this is no longer a visual
+ * outlier — all three trims with real photos now match.)
  */
 export const cayman981S: Trim = {
   slug: "s",

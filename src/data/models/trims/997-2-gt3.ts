@@ -17,13 +17,13 @@ import type { Trim } from "../types";
  * earlier pass had run it through the rembg pipeline used for other
  * trims; the user asked for the original scene, letterbox bars and
  * all, instead). It's a full scenic composition (mountain road
- * background) rather than the isolated-car cutout the other trim
- * images use — flagged as a visual inconsistency in the card grid,
- * not silently normalized, since the user supplied this image
- * directly and asked for it unprocessed. `image.fit` is set to
- * "cover" rather than the default "contain" so this full scene fills
- * its box edge-to-edge instead of letterboxing inside it — "contain"
- * is the right choice for the cutout-style trim images, not this one.
+ * background) rather than a background-removed cutout. `image.fit` is
+ * set to "cover" rather than the default "contain" so this full scene
+ * fills its box edge-to-edge instead of letterboxing inside it —
+ * "contain" is the right choice for a cutout-style image, not this
+ * one. (The 997.2 Carrera S trim was later swapped to the same
+ * unprocessed-full-scene treatment, so all three trims with real
+ * photos on the site now match this style.)
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",

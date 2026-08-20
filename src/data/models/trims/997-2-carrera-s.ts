@@ -25,6 +25,16 @@ import type { Trim } from "../types";
  * (manual vs. PDK, Sport Chrono, PSE, Sport PASM, etc.). Everything
  * else in that source (specs, pricing, checklist, known issues)
  * matched what was already here — no other fields changed.
+ *
+ * Updated again August 2026: swapped in a user-supplied 3/4-front
+ * illustration (dark blue, parked in front of a modern house), used
+ * as-is per the user's established preference for the other two trim
+ * images — no background removal/cropping. `image.fit` is set to
+ * "cover" to match, so this full scene fills its box edge-to-edge
+ * rather than letterboxing inside it (see `VehicleImage.fit` in
+ * types.ts). This was previously the last trim still using a
+ * background-removed side-profile cutout; all three trims with real
+ * photos are now full unprocessed scenes.
  */
 export const carrera9972S: Trim = {
   slug: "s",
@@ -36,7 +46,8 @@ export const carrera9972S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/997-2-carrera/s.png",
-    alt: "997.2 Carrera S, silver, side profile view",
+    alt: "997.2 Carrera S, dark blue, three-quarter front view, parked in front of a modern house",
+    fit: "cover",
   },
 
   overview: {
