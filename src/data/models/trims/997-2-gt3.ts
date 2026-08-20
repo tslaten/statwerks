@@ -12,8 +12,12 @@ import type { Trim } from "../types";
  * code, so that ambiguity is stated plainly rather than picking one
  * to look more authoritative than the research supports.
  *
- * No vehicle image supplied yet — the page renders the standard
- * "Image pending" placeholder until one is sourced.
+ * Vehicle image: a user-supplied illustration, background-removed and
+ * cropped via the same rembg pipeline used for the other trims. Note
+ * it's a 3/4-front angle rather than the side-profile crop the other
+ * two trim images use — flagged as a framing inconsistency in the
+ * card grid, not silently normalized to match, since the user
+ * supplied this image directly and asked for it as-is.
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",
@@ -23,6 +27,10 @@ export const gt39972Trim: Trim = {
   teaser:
     "A purist's naturally aspirated 911 — the last GT3 built on the Mezger engine, manual-only and rear-wheel-drive only.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/997-2-gt3/gt3.png",
+    alt: "997.2 GT3, red, three-quarter front view",
+  },
 
   overview: {
     engine: "3.8L flat-six, naturally aspirated (Mezger-derived, dry-sump lubrication)",
