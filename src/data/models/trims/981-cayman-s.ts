@@ -25,6 +25,13 @@ import type { Trim } from "../types";
  * (PASM, Sport Chrono, PSE, PTV+LSD, etc.). Everything else in that
  * source (specs, pricing, checklist, known issues) matched what was
  * already here — no other fields changed.
+ *
+ * Updated again August 2026: swapped in a user-supplied 3/4-front
+ * illustration (background-removed via the same rembg pipeline as the
+ * other trims), replacing the earlier side-profile shot. This now
+ * matches the 997.2 GT3 image's framing; the 997.2 Carrera S image is
+ * the one that's still side-profile — see that trim file if
+ * normalizing all three to one angle matters later.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -36,7 +43,7 @@ export const cayman981S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/981-cayman/s.png",
-    alt: "981 Cayman S, white, side profile view",
+    alt: "981 Cayman S, white, three-quarter front view",
   },
 
   overview: {
