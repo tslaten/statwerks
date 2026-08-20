@@ -35,7 +35,9 @@ import type { Trim } from "../types";
  * outlier next to the isolated-car cutouts used elsewhere in the card
  * grid (997.2 Carrera S is side-profile/cutout; 997.2 GT3 is also now
  * a full unprocessed scene) — an intentional inconsistency per the
- * user's explicit instruction, not an oversight.
+ * user's explicit instruction, not an oversight. `image.fit` is set
+ * to "cover" (rather than the default "contain") so this full scene
+ * fills its box edge-to-edge instead of letterboxing inside it.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -48,6 +50,7 @@ export const cayman981S: Trim = {
   image: {
     src: "/vehicles/981-cayman/s.png",
     alt: "981 Cayman S, white, three-quarter front view, parked in front of a modern house",
+    fit: "cover",
   },
 
   overview: {

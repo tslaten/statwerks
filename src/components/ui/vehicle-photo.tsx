@@ -32,13 +32,13 @@ export function VehiclePhoto({
 }) {
   if (image) {
     return (
-      <div className={`relative bg-surface-recessed ${className}`}>
+      <div className={`relative overflow-hidden bg-surface-recessed ${className}`}>
         <Image
           src={image.src}
           alt={image.alt}
           fill
           sizes={sizes}
-          style={{ objectFit: "contain", objectPosition }}
+          style={{ objectFit: image.fit ?? "contain", objectPosition }}
         />
       </div>
     );

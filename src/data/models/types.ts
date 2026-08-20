@@ -37,6 +37,14 @@ export interface VehicleImage {
   /** Path under /public, e.g. "/vehicles/981-cayman/s.png" */
   src: string;
   alt: string;
+  /**
+   * How the image should fill its box. "contain" (default) is for
+   * background-removed cutout shots — the whole car stays visible with
+   * empty space around it. "cover" is for full, unprocessed scene photos
+   * that should fill the box edge-to-edge (cropping as needed) rather
+   * than sit letterboxed inside it.
+   */
+  fit?: "contain" | "cover";
 }
 
 export interface KnownIssue {

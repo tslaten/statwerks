@@ -20,7 +20,10 @@ import type { Trim } from "../types";
  * background) rather than the isolated-car cutout the other trim
  * images use — flagged as a visual inconsistency in the card grid,
  * not silently normalized, since the user supplied this image
- * directly and asked for it unprocessed.
+ * directly and asked for it unprocessed. `image.fit` is set to
+ * "cover" rather than the default "contain" so this full scene fills
+ * its box edge-to-edge instead of letterboxing inside it — "contain"
+ * is the right choice for the cutout-style trim images, not this one.
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",
@@ -33,6 +36,7 @@ export const gt39972Trim: Trim = {
   image: {
     src: "/vehicles/997-2-gt3/gt3.png",
     alt: "997.2 GT3, red, three-quarter front view, parked on a mountain road",
+    fit: "cover",
   },
 
   overview: {
