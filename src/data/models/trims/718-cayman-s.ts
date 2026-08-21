@@ -24,8 +24,11 @@ import type { Trim } from "../types";
  * sales are generally described as starting model-year 2017, so a
  * 2016 model year is unusual and wasn't independently re-verified.
  *
- * No vehicle image supplied for this trim yet — the page renders the
- * standard "Image pending" placeholder until one is sourced.
+ * Vehicle image: a user-supplied illustration (silver, 3/4-front, in a
+ * showroom), used as-is — no background removal or cropping, matching
+ * the treatment settled on for every other trim image on this site.
+ * `image.fit` is set to "cover" so it fills its box edge-to-edge
+ * rather than letterboxing inside it.
  */
 export const cayman718S: Trim = {
   slug: "s",
@@ -35,6 +38,11 @@ export const cayman718S: Trim = {
   teaser:
     "The 2.5L turbo step up from base — a variable-turbine-geometry turbo and a genuine hardware difference, not just a tune.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/718-cayman/s.png",
+    alt: "718 Cayman S, silver, three-quarter front view, in a showroom",
+    fit: "cover",
+  },
 
   overview: {
     engine: "2.5L turbocharged flat-four (MA2/22, variable-turbine-geometry turbo)",

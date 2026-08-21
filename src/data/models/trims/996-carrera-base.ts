@@ -17,8 +17,11 @@ import type { Trim } from "../types";
  * the 997). This is stated explicitly as a known-issues entry below,
  * since it's an easy assumption to carry over from later generations.
  *
- * No vehicle image supplied for this trim yet — the page renders the
- * standard "Image pending" placeholder until one is sourced.
+ * Vehicle image: a user-supplied illustration (red, 3/4-front, on a
+ * mountain road), used as-is — no background removal or cropping,
+ * matching the treatment settled on for every other trim image on
+ * this site. `image.fit` is set to "cover" so it fills its box
+ * edge-to-edge rather than letterboxing inside it.
  *
  * Curb weight and 0–60 figures come from enthusiast spec-archive
  * sites (Excellence Magazine's spec tables, fastestlaps.com) rather
@@ -34,6 +37,11 @@ export const carrera996Base: Trim = {
   teaser:
     "The first water-cooled 911 — where the IMS bearing conversation started, and today the most accessible entry point into 911 ownership.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/996-carrera/base.png",
+    alt: "996 Carrera, red, three-quarter front view, on a mountain road",
+    fit: "cover",
+  },
 
   overview: {
     engine:
