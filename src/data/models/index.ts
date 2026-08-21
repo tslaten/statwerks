@@ -50,6 +50,10 @@ export function getAllPlatforms(): Platform[] {
   return platforms;
 }
 
+export function getAllTrims(): Trim[] {
+  return trims;
+}
+
 export function getPlatformBySlug(slug: string): Platform | undefined {
   return platforms.find((platform) => platform.slug === slug);
 }

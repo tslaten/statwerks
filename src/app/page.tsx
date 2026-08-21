@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { PlatformCard } from "@/components/ui/platform-card";
-import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
+import { TrimCard } from "@/components/ui/trim-card";
+import {
+  getAllPlatforms,
+  getAllTrims,
+  getPlatformBySlug,
+  getTrimsForPlatform,
+} from "@/data/models";
+
+const POPULAR_COUNT = 4;
 
 export default function Home() {
   const platforms = getAllPlatforms();
+  const trims = getAllTrims();
 
   return (
     <>
@@ -87,25 +96,60 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* Two separate tracks, deliberately kept apart: a platform card and
+          a trim card look alike but go to different kinds of page (a
+          generation hub vs. a specific trim's dashboard). Mixing the two
+          in one grid — as this section used to, sometimes skipping the
+          hub entirely depending on how many trims a platform had — meant
+          identical-looking cards behaved inconsistently. Each track here
+          is internally consistent instead. */}
       <section>
         <Container className="py-16 md:py-20">
           <div className="mb-8 flex items-end justify-between gap-4">
-            <p className="label-mono text-steel-dim">Available now</p>
+            <p className="label-mono text-steel-dim">Popular models</p>
             <Link
               href="/models"
               className="label-mono text-steel transition-colors hover:text-ink"
             >
-              View all →
+              View all models →
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {platforms.map((platform) => (
+            {platforms.slice(0, POPULAR_COUNT).map((platform) => (
               <PlatformCard
                 key={platform.slug}
                 platform={platform}
                 trims={getTrimsForPlatform(platform.slug)}
               />
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line">
+        <Container className="py-16 md:py-20">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <p className="label-mono text-steel-dim">Popular trims</p>
+            <Link
+              href="/trims"
+              className="label-mono text-steel transition-colors hover:text-ink"
+            >
+              View all trims →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {trims.slice(0, POPULAR_COUNT).map((trim) => {
+              const platform = getPlatformBySlug(trim.platformSlug);
+              if (!platform) return null;
+              return (
+                <TrimCard
+                  key={`${trim.platformSlug}-${trim.slug}`}
+                  platform={platform}
+                  trim={trim}
+                  includeChassisCode
+                />
+              );
+            })}
           </div>
         </Container>
       </section>

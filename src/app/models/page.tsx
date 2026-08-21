@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
+import { ComingSoonCard } from "@/components/ui/coming-soon-card";
 import { PlatformCard } from "@/components/ui/platform-card";
 import { getAllPlatforms, getTrimsForPlatform } from "@/data/models";
 
@@ -32,6 +33,7 @@ export default function ModelsIndexPage() {
             trims={getTrimsForPlatform(platform.slug)}
           />
         ))}
+        <ComingSoonCard />
       </div>
     </Container>
   );
