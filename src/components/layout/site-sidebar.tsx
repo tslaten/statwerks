@@ -24,6 +24,18 @@ export interface PlatformWithTrims {
 const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster"];
 
 /**
+ * Trims format `overview.power` as e.g. "385 hp @ 6,500 rpm" for full
+ * spec-readout contexts (cards, the trim page itself). The sidebar row
+ * is much tighter — just enough to distinguish trims at a glance — so
+ * it shows the horsepower figure only, stripping the "@ N,NNN rpm"
+ * suffix when present. Strings that don't have one (e.g. "296–320 hp")
+ * pass through unchanged.
+ */
+function powerWithoutRpm(power: string): string {
+  return power.replace(/\s*@\s*[\d,]+\s*rpm.*/i, "").trim();
+}
+
+/**
  * Persistent dashboard-style left nav (logo, primary links, the full
  * model list, a promo card) — present on every page, not toggled from
  * a header button. Fixed and always visible at `lg` and up, and
@@ -295,7 +307,7 @@ export function SiteSidebar({
                                             >
                                               <span>{trim.name}</span>
                                               <span className="label-mono text-steel-dim">
-                                                {trim.overview.power}
+                                                {powerWithoutRpm(trim.overview.power)}
                                               </span>
                                             </Link>
                                           </li>
