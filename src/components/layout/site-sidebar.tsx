@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
+  ChevronRight,
   Gauge,
   Home,
   LayoutGrid,
@@ -13,11 +14,14 @@ import {
   X,
 } from "lucide-react";
 import type { Platform, Trim } from "@/data/models";
+import { roadmap, type ModelLine } from "@/data/models/roadmap";
 
 export interface PlatformWithTrims {
   platform: Platform;
   trims: Trim[];
 }
+
+const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster"];
 
 /**
  * Persistent dashboard-style left nav (logo, primary links, the full
@@ -28,6 +32,15 @@ export interface PlatformWithTrims {
  * Below `lg` — where collapsing to icons doesn't help on a phone-width
  * screen — it's always full-width and behaves as a slim top bar +
  * off-canvas drawer instead; the collapse toggle only renders at `lg`.
+ *
+ * The model list covers every 911 and Boxster/Cayman generation (see
+ * `data/models/roadmap.ts`), not just the ones with a real dashboard —
+ * generations without one show as a disabled "Coming soon" row rather
+ * than being left out, so the list reads as a full lineup/roadmap, not
+ * just today's catalog. It's organized as two levels of accordion —
+ * model line (911 / Cayman-Boxster), then each generation within it —
+ * so the list stays navigable as more generations get added, rather
+ * than one long always-expanded wall of trims.
  */
 export function SiteSidebar({
   groups,
@@ -39,8 +52,35 @@ export function SiteSidebar({
   onToggleCollapsed: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  // Explicit user choices only — undefined/missing means "use the
+  // default for this render" rather than a stored true/false. Lines
+  // default open; a platform defaults open only when the current route
+  // is inside it. Deriving the default from `pathname` on every render
+  // (instead of syncing it into state via an effect) means navigating
+  // to a new trim always shows the right group expanded immediately,
+  // with no effect/render-order lag, and never fights a choice the
+  // user already made explicitly.
+  const [lineOverrides, setLineOverrides] = useState<
+    Partial<Record<ModelLine, boolean>>
+  >({});
+  const [platformOverrides, setPlatformOverrides] = useState<
+    Record<string, boolean>
+  >({});
   const pathname = usePathname();
   const close = () => setOpen(false);
+
+  const activePlatformSlug = groups.find(({ platform }) =>
+    pathname.startsWith(`/models/${platform.slug}`)
+  )?.platform.slug;
+
+  const isLineOpen = (line: ModelLine) => lineOverrides[line] ?? true;
+  const isPlatformOpen = (slug: string) =>
+    platformOverrides[slug] ?? slug === activePlatformSlug;
+
+  const toggleLine = (line: ModelLine) =>
+    setLineOverrides((prev) => ({ ...prev, [line]: !isLineOpen(line) }));
+  const togglePlatform = (slug: string) =>
+    setPlatformOverrides((prev) => ({ ...prev, [slug]: !isPlatformOpen(slug) }));
 
   // Escape to close, and lock body scroll while the mobile drawer is open.
   useEffect(() => {
@@ -161,39 +201,117 @@ export function SiteSidebar({
             <p className="label-mono mb-1.5 mt-6 px-3 text-steel-dim">
               Model dashboards
             </p>
-            <ul className="space-y-4">
-              {groups.map(({ platform, trims }) => (
-                <li key={platform.slug}>
-                  <p className="px-3 text-xs font-medium text-steel">
-                    {platform.chassisCode} · {platform.shortName}
-                  </p>
-                  <ul className="mt-1 space-y-0.5">
-                    {trims.map((trim) => {
-                      const href = `/models/${platform.slug}/${trim.slug}`;
-                      const active = pathname === href;
-                      return (
-                        <li key={trim.slug}>
-                          <Link
-                            href={href}
-                            onClick={close}
-                            aria-current={active ? "page" : undefined}
-                            className={`flex items-center justify-between rounded-lg py-2 pl-8 pr-3 text-sm transition-colors ${
-                              active
-                                ? "bg-surface-recessed text-ink"
-                                : "text-steel hover:bg-surface-recessed hover:text-ink"
-                            }`}
-                          >
-                            <span>{trim.name}</span>
-                            <span className="label-mono text-steel-dim">
-                              {trim.overview.power}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              ))}
+            <ul className="space-y-1">
+              {MODEL_LINES.map((line) => {
+                const lineOpen = isLineOpen(line);
+                return (
+                  <li key={line}>
+                    <button
+                      type="button"
+                      onClick={() => toggleLine(line)}
+                      aria-expanded={lineOpen}
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium text-ink transition-colors hover:bg-surface-recessed"
+                    >
+                      <span>{line}</span>
+                      <ChevronRight
+                        size={14}
+                        strokeWidth={2}
+                        aria-hidden
+                        className={`shrink-0 text-steel-dim transition-transform ${lineOpen ? "rotate-90" : ""}`}
+                      />
+                    </button>
+
+                    {lineOpen ? (
+                      <ul className="mt-0.5 space-y-1 pl-2">
+                        {roadmap
+                          .filter((gen) => gen.modelLine === line)
+                          .map((gen) => {
+                            if (!gen.platformSlugs?.length) {
+                              return (
+                                <li key={gen.label}>
+                                  <div
+                                    aria-disabled="true"
+                                    className="flex cursor-not-allowed items-center justify-between rounded-lg px-3 py-2 opacity-60"
+                                  >
+                                    <div>
+                                      <p className="text-xs font-medium text-steel-dim">
+                                        {gen.label}
+                                      </p>
+                                      <p className="label-mono mt-0.5 text-steel-dim/80">
+                                        {gen.years}
+                                      </p>
+                                    </div>
+                                    <span className="label-mono shrink-0 rounded-full bg-surface-recessed px-2 py-0.5 text-steel-dim">
+                                      Coming soon
+                                    </span>
+                                  </div>
+                                </li>
+                              );
+                            }
+
+                            return gen.platformSlugs.map((slug) => {
+                              const group = groups.find(
+                                (g) => g.platform.slug === slug
+                              );
+                              if (!group) return null;
+                              const { platform, trims } = group;
+                              const platformOpen = isPlatformOpen(slug);
+
+                              return (
+                                <li key={slug}>
+                                  <button
+                                    type="button"
+                                    onClick={() => togglePlatform(slug)}
+                                    aria-expanded={platformOpen}
+                                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-surface-recessed"
+                                  >
+                                    <span className="text-xs font-medium text-steel">
+                                      {platform.chassisCode} · {platform.shortName}
+                                    </span>
+                                    <ChevronRight
+                                      size={13}
+                                      strokeWidth={2}
+                                      aria-hidden
+                                      className={`shrink-0 text-steel-dim transition-transform ${platformOpen ? "rotate-90" : ""}`}
+                                    />
+                                  </button>
+
+                                  {platformOpen ? (
+                                    <ul className="mt-0.5 space-y-0.5">
+                                      {trims.map((trim) => {
+                                        const href = `/models/${platform.slug}/${trim.slug}`;
+                                        const active = pathname === href;
+                                        return (
+                                          <li key={trim.slug}>
+                                            <Link
+                                              href={href}
+                                              onClick={close}
+                                              aria-current={active ? "page" : undefined}
+                                              className={`flex items-center justify-between rounded-lg py-2 pl-8 pr-3 text-sm transition-colors ${
+                                                active
+                                                  ? "bg-surface-recessed text-ink"
+                                                  : "text-steel hover:bg-surface-recessed hover:text-ink"
+                                              }`}
+                                            >
+                                              <span>{trim.name}</span>
+                                              <span className="label-mono text-steel-dim">
+                                                {trim.overview.power}
+                                              </span>
+                                            </Link>
+                                          </li>
+                                        );
+                                      })}
+                                    </ul>
+                                  ) : null}
+                                </li>
+                              );
+                            });
+                          })}
+                      </ul>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </nav>
