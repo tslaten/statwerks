@@ -45,8 +45,11 @@ import type { Trim } from "../types";
  * is flagged directly in its own note as unusually high for this trim
  * and not independently re-verified — treat with real caution.
  *
- * No vehicle image supplied for this trim yet — the page renders the
- * standard "Image pending" placeholder until one is sourced.
+ * Vehicle image: a user-supplied illustration (white, 3/4-front, on a
+ * residential street), used as-is — no background removal or
+ * cropping, matching the treatment settled on for every other trim
+ * image on this site. `image.fit` is set to "cover" so it fills its
+ * box edge-to-edge rather than letterboxing inside it.
  */
 export const cayman718Base: Trim = {
   slug: "base",
@@ -56,6 +59,11 @@ export const cayman718Base: Trim = {
   teaser:
     "The entry point into 718 ownership — lighter than the S, a genuinely different (not just detuned) turbo and suspension, and a divisive engine note.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/718-cayman/base.png",
+    alt: "718 Cayman, white, three-quarter front view, on a residential street",
+    fit: "cover",
+  },
 
   overview: {
     engine: "2.0L turbocharged flat-four (MA2.20, fixed-geometry turbo with a conventional internal wastegate)",
