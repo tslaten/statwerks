@@ -10,6 +10,7 @@ import { carrera9972S } from "./trims/997-2-carrera-s";
 import { gt39972Trim } from "./trims/997-2-gt3";
 import { carrera996Base } from "./trims/996-carrera-base";
 import { cayman718S } from "./trims/718-cayman-s";
+import { cayman718Base } from "./trims/718-cayman-base";
 import {
   SEVERITY_ORDER,
   type BuyingChecklist,
@@ -42,6 +43,7 @@ export const trims: Trim[] = [
   gt39972Trim,
   carrera996Base,
   cayman718S,
+  cayman718Base,
 ];
 
 export function getAllPlatforms(): Platform[] {
