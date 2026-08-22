@@ -13,10 +13,11 @@ import { countBySeverity, SpecPlateCard } from "./spec-plate-card";
  * has, and the hub page itself already handles the single-trim case
  * fine (its trim picker just shows one card).
  *
- * Still shows a representative photo when available (the platform's
- * first trim's image) so single-trim platforms don't lose the real
- * vehicle photos just because the card no longer deep-links to that
- * trim specifically.
+ * Prefers the platform's own `image` (a photo picked to represent the
+ * generation as a whole) when set; falls back to the first trim's
+ * image otherwise, so single-trim platforms without a dedicated
+ * platform photo yet still show a real vehicle rather than a
+ * placeholder.
  */
 export function PlatformCard({
   platform,
@@ -36,7 +37,7 @@ export function PlatformCard({
       severityCounts={countBySeverity(platform.sharedKnownIssues)}
       draft={platform.contentStatus === "placeholder"}
       ctaLabel="View model →"
-      image={representativeTrim?.image}
+      image={platform.image ?? representativeTrim?.image}
     />
   );
 }

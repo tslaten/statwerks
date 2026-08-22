@@ -25,14 +25,16 @@ import type { Trim } from "../types";
  * treatment, so all three trims with real photos on the site now
  * match this style.)
  *
- * Updated again August 2026: swapped in another user-supplied
- * illustration for the "let's use some model-specific images" pass —
- * two white cars on a wooded roadside pull-off rather than the single
- * red car on a mountain road. The request just said "997.2" without
- * specifying a trim; assigned to GT3 rather than Carrera S based on
- * the visible rear wing and vented, aggressive front bumper on the
- * left car — those are GT3-specific styling cues the standard Carrera
- * doesn't have. Flagging this inference here in case it's wrong.
+ * Updated again August 2026: a separate "two white cars on a wooded
+ * pull-off" illustration was briefly wired in here for a "let's use
+ * some model-specific images" pass (assigned to GT3 rather than
+ * Carrera S based on the visible rear wing/vented bumper — GT3-
+ * specific styling cues), then reverted — that image is now the
+ * *platform's* image (see `platforms/997-2-gt3.ts`) instead, used on
+ * the platform hub page and platform-level cards. Trim-level pages/
+ * cards (this file) keep the original single red-car image;
+ * `Platform.image` and `Trim.image` are deliberately separate fields
+ * precisely so one can change without touching the other.
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",
@@ -44,7 +46,7 @@ export const gt39972Trim: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/997-2-gt3/gt3.png",
-    alt: "Two 997.2 GT3 cars, white, parked on a wooded roadside pull-off",
+    alt: "997.2 GT3, red, three-quarter front view, parked on a mountain road",
     fit: "cover",
   },
 

@@ -8,6 +8,7 @@ import { KnownIssueRow } from "@/components/ui/known-issue-row";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SpecStrip } from "@/components/ui/spec-strip";
 import { TrimCard } from "@/components/ui/trim-card";
+import { VehiclePhoto } from "@/components/ui/vehicle-photo";
 import {
   getAllPlatforms,
   getPlatformBySlug,
@@ -58,21 +59,41 @@ export default async function PlatformPage({
             <span className="text-steel">{platform.shortName}</span>
           </nav>
 
-          <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-            <span className="label-mono text-steel-dim">
-              {platform.chassisCode}
-            </span>
-            <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
-              {platform.name}
-            </h1>
-          </div>
-          <p className="mt-2 font-mono text-sm text-steel">
-            {platform.overview.years} · {platform.overview.body}
-          </p>
+          <div className="mt-6 lg:grid lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
+            <div className="lg:max-w-xl">
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <span className="label-mono text-steel-dim">
+                  {platform.chassisCode}
+                </span>
+                <h1 className="text-stretch font-display text-4xl font-semibold leading-tight text-ink md:text-5xl">
+                  {platform.name}
+                </h1>
+              </div>
+              <p className="mt-2 font-mono text-sm text-steel">
+                {platform.overview.years} · {platform.overview.body}
+              </p>
 
-          <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-ink/90">
-            {platform.overview.summary}
-          </p>
+              <p className="mt-6 text-[0.9375rem] leading-relaxed text-ink/90">
+                {platform.overview.summary}
+              </p>
+            </div>
+
+            <div className="relative mt-12 lg:mt-0">
+              <span
+                aria-hidden
+                className="text-stretch pointer-events-none absolute -top-10 left-0 select-none font-display text-[6rem] font-bold leading-none text-ink/[0.04] sm:text-[8rem] lg:-top-14 lg:text-[9rem]"
+              >
+                {platform.chassisCode}
+              </span>
+              <VehiclePhoto
+                image={platform.image}
+                fallbackLabel={platform.name}
+                className="aspect-[4/3] w-full rounded-[20px]"
+                sizes="(min-width: 1024px) 48vw, 90vw"
+                iconSize={44}
+              />
+            </div>
+          </div>
         </Container>
       </header>
 

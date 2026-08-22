@@ -21,6 +21,13 @@ import type { Platform } from "../types";
  * No documented bore-scoring concern was found for this engine family
  * in this research pass, so no entry was added for it — that
  * conversation appears specific to the M96/M97/9A1 engine lineage.
+ *
+ * Updated again August 2026: added a platform-level `image` — a
+ * user-supplied illustration of two 997.2 GT3s (white, on a wooded
+ * roadside pull-off), used as-is, shown on the platform hub page and
+ * platform-level cards. Deliberately separate from the GT3 trim's own
+ * `image` (a single red car on a mountain road) — the two fields can
+ * each change independently.
  */
 export const gt39972: Platform = {
   slug: "997-2-gt3",
@@ -30,6 +37,11 @@ export const gt39972: Platform = {
   teaser:
     "The last GT3 to use the legendary Mezger engine — a purist's naturally aspirated 911 from the same chassis generation as the DFI-powered Carrera, with an entirely different (and entirely separate) risk profile.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/997-2-gt3/platform.png",
+    alt: "Two 997.2 GT3 cars, white, parked on a wooded roadside pull-off",
+    fit: "cover",
+  },
 
   overview: {
     years: "2010–2011",

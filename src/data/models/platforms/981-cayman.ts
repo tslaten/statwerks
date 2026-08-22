@@ -13,6 +13,13 @@ import type { Platform } from "../types";
  * real on the 981's MA1 direct-injection engine, correlated with
  * cold-engine hard driving and infrequent oil changes. Mirrors the
  * same walk-back already made on the 997.2 Carrera platform page.
+ *
+ * Updated again August 2026: added a platform-level `image` — a
+ * user-supplied illustration of two 981 Cayman S cars (silver and
+ * red), used as-is, shown on the platform hub page and platform-level
+ * cards. This is deliberately separate from the Cayman S trim's own
+ * `image` (a single white car) — the two fields can each change
+ * independently.
  */
 export const cayman981: Platform = {
   slug: "981-cayman",
@@ -22,6 +29,11 @@ export const cayman981: Platform = {
   teaser:
     "The last naturally-aspirated mid-engine Cayman before the 718 switched to turbocharged flat-fours.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/981-cayman/platform.png",
+    alt: "Two 981 Cayman S cars, silver and red, parked in front of a modern house at dusk",
+    fit: "cover",
+  },
 
   overview: {
     years: "2013–2016",

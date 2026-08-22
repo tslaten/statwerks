@@ -38,12 +38,14 @@ import type { Trim } from "../types";
  * unprocessed-full-scene treatment, so this is no longer a visual
  * outlier — all three trims with real photos now match.)
  *
- * Updated again August 2026: swapped in another user-supplied
- * illustration for the "let's use some model-specific images" pass —
- * same modern-house driveway setting, but this one shows two cars
- * (silver and red) rather than one. Used as-is per the same
- * unprocessed-full-scene treatment as before; alt text updated to
- * describe both cars rather than a single one.
+ * Updated again August 2026: a separate "two cars" illustration was
+ * briefly wired in here for a "let's use some model-specific images"
+ * pass, then reverted — that image is now the *platform's* image
+ * (see `platforms/981-cayman.ts`) instead, used on the platform hub
+ * page and platform-level cards. Trim-level pages/cards (this file)
+ * keep their own single-car image; `Platform.image` and `Trim.image`
+ * are deliberately separate fields precisely so one can change without
+ * touching the other.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -55,7 +57,7 @@ export const cayman981S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/981-cayman/s.png",
-    alt: "Two 981 Cayman S cars, silver and red, parked in front of a modern house at dusk",
+    alt: "981 Cayman S, white, three-quarter front view, parked in front of a modern house",
     fit: "cover",
   },
 

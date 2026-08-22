@@ -135,6 +135,16 @@ export interface Platform {
   /** Whether this entry has been reviewed with real research content yet. */
   contentStatus: ContentStatus;
   overview: PlatformOverview;
+  /**
+   * A photo representing the generation as a whole — shown on the
+   * platform hub page and on platform-level cards (home, /models).
+   * Deliberately separate from any trim's own `image`: a platform can
+   * be reassigned a new representative photo without touching what
+   * renders on that trim's own dashboard, and vice versa. Optional —
+   * falls back to a trim's image (see callers) or a placeholder when
+   * unset, same pattern as `Trim.image`.
+   */
+  image?: VehicleImage;
   /** Known issues that apply across every trim of this platform. */
   sharedKnownIssues: KnownIssue[];
   /** Buying guidance shared across every trim of this platform. */
