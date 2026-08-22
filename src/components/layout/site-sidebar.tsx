@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChevronRight,
   Gauge,
@@ -11,10 +11,12 @@ import {
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
+  Search,
   X,
 } from "lucide-react";
 import type { Platform, Trim } from "@/data/models";
 import { roadmap, type ModelLine } from "@/data/models/roadmap";
+import { SidebarSearch } from "./sidebar-search";
 
 export interface PlatformWithTrims {
   platform: Platform;
@@ -80,6 +82,35 @@ export function SiteSidebar({
   >({});
   const pathname = usePathname();
   const close = () => setOpen(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [focusRequestedAt, setFocusRequestedAt] = useState(0);
+
+  const focusSearch = useCallback(() => {
+    setOpen(true); // reveal the off-canvas drawer at mobile widths
+    if (collapsed) onToggleCollapsed(); // expand out of the icon rail at lg
+    setFocusRequestedAt(Date.now());
+  }, [collapsed, onToggleCollapsed]);
+
+  // Cmd/Ctrl+K jumps to search from anywhere, expanding the sidebar
+  // first if it's collapsed to an icon rail.
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        focusSearch();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [focusSearch]);
+
+  // Actually focus once a request lands — re-runs when `collapsed` flips
+  // too, so a request made while collapsed still lands after the
+  // search input mounts.
+  useEffect(() => {
+    if (focusRequestedAt === 0) return;
+    searchInputRef.current?.focus();
+  }, [focusRequestedAt, collapsed]);
 
   const activePlatformSlug = groups.find(({ platform }) =>
     pathname.startsWith(`/models/${platform.slug}`)
@@ -208,6 +239,21 @@ export function SiteSidebar({
             />
             <span className={collapsed ? "lg:hidden" : ""}>All models</span>
           </Link>
+
+          <div className={`mt-3 ${collapsed ? "lg:hidden" : ""}`}>
+            <SidebarSearch ref={searchInputRef} onNavigate={close} />
+          </div>
+          {collapsed ? (
+            <button
+              type="button"
+              onClick={focusSearch}
+              title="Search (⌘K)"
+              aria-label="Search models and trims"
+              className="mt-1 hidden w-full items-center justify-center rounded-xl px-3 py-2.5 text-steel transition-colors hover:bg-surface-recessed hover:text-ink lg:flex"
+            >
+              <Search size={17} strokeWidth={1.75} aria-hidden />
+            </button>
+          ) : null}
 
           <div className={collapsed ? "lg:hidden" : ""}>
             <p className="label-mono mb-1.5 mt-6 px-3 text-steel-dim">
