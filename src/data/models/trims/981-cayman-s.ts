@@ -37,6 +37,13 @@ import type { Trim } from "../types";
  * 997.2 Carrera S and 997.2 GT3 trims were later swapped to the same
  * unprocessed-full-scene treatment, so this is no longer a visual
  * outlier — all three trims with real photos now match.)
+ *
+ * Updated again August 2026: swapped in another user-supplied
+ * illustration for the "let's use some model-specific images" pass —
+ * same modern-house driveway setting, but this one shows two cars
+ * (silver and red) rather than one. Used as-is per the same
+ * unprocessed-full-scene treatment as before; alt text updated to
+ * describe both cars rather than a single one.
  */
 export const cayman981S: Trim = {
   slug: "s",
@@ -48,7 +55,7 @@ export const cayman981S: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/981-cayman/s.png",
-    alt: "981 Cayman S, white, three-quarter front view, parked in front of a modern house",
+    alt: "Two 981 Cayman S cars, silver and red, parked in front of a modern house at dusk",
     fit: "cover",
   },
 
