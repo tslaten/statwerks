@@ -16,14 +16,23 @@ import type { Trim } from "../types";
  * user's explicit request — no background removal or cropping (an
  * earlier pass had run it through the rembg pipeline used for other
  * trims; the user asked for the original scene, letterbox bars and
- * all, instead). It's a full scenic composition (mountain road
- * background) rather than a background-removed cutout. `image.fit` is
- * set to "cover" rather than the default "contain" so this full scene
- * fills its box edge-to-edge instead of letterboxing inside it —
- * "contain" is the right choice for a cutout-style image, not this
- * one. (The 997.2 Carrera S trim was later swapped to the same
- * unprocessed-full-scene treatment, so all three trims with real
- * photos on the site now match this style.)
+ * all, instead). It's a full scenic composition rather than a
+ * background-removed cutout. `image.fit` is set to "cover" rather
+ * than the default "contain" so this full scene fills its box
+ * edge-to-edge instead of letterboxing inside it — "contain" is the
+ * right choice for a cutout-style image, not this one. (The 997.2
+ * Carrera S trim was later swapped to the same unprocessed-full-scene
+ * treatment, so all three trims with real photos on the site now
+ * match this style.)
+ *
+ * Updated again August 2026: swapped in another user-supplied
+ * illustration for the "let's use some model-specific images" pass —
+ * two white cars on a wooded roadside pull-off rather than the single
+ * red car on a mountain road. The request just said "997.2" without
+ * specifying a trim; assigned to GT3 rather than Carrera S based on
+ * the visible rear wing and vented, aggressive front bumper on the
+ * left car — those are GT3-specific styling cues the standard Carrera
+ * doesn't have. Flagging this inference here in case it's wrong.
  */
 export const gt39972Trim: Trim = {
   slug: "gt3",
@@ -35,7 +44,7 @@ export const gt39972Trim: Trim = {
   contentStatus: "reviewed",
   image: {
     src: "/vehicles/997-2-gt3/gt3.png",
-    alt: "997.2 GT3, red, three-quarter front view, parked on a mountain road",
+    alt: "Two 997.2 GT3 cars, white, parked on a wooded roadside pull-off",
     fit: "cover",
   },
 
