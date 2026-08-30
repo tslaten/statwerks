@@ -147,10 +147,10 @@ export const SidebarSearch = forwardRef<
                         : "text-steel hover:bg-surface-recessed hover:text-ink"
                   }`}
                 >
-                  <span className="truncate">
+                  <span className="min-w-0 truncate">
                     <HighlightedLabel label={item.label} indices={match.indices} />
                   </span>
-                  <span className="label-mono shrink-0 text-steel-dim">
+                  <span className="label-mono max-w-[40%] shrink-0 truncate text-steel-dim">
                     {disabled ? "Coming soon" : item.subtitle}
                   </span>
                 </button>

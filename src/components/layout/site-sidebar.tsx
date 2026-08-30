@@ -2,21 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronRight,
   Gauge,
   Home,
   LayoutGrid,
-  Menu,
   PanelLeftClose,
   PanelLeftOpen,
-  Search,
   X,
 } from "lucide-react";
 import type { Platform, Trim } from "@/data/models";
 import { roadmap, type ModelLine } from "@/data/models/roadmap";
-import { SidebarSearch } from "./sidebar-search";
+import { powerWithoutRpm } from "@/lib/format";
 
 export interface PlatformWithTrims {
   platform: Platform;
@@ -26,26 +24,19 @@ export interface PlatformWithTrims {
 const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster"];
 
 /**
- * Trims format `overview.power` as e.g. "385 hp @ 6,500 rpm" for full
- * spec-readout contexts (cards, the trim page itself). The sidebar row
- * is much tighter — just enough to distinguish trims at a glance — so
- * it shows the horsepower figure only, stripping the "@ N,NNN rpm"
- * suffix when present. Strings that don't have one (e.g. "296–320 hp")
- * pass through unchanged.
- */
-function powerWithoutRpm(power: string): string {
-  return power.replace(/\s*@\s*[\d,]+\s*rpm.*/i, "").trim();
-}
-
-/**
  * Persistent dashboard-style left nav (logo, primary links, the full
  * model list, a promo card) — present on every page, not toggled from
  * a header button. Fixed and always visible at `lg` and up, and
  * collapsible there to an icon-only rail (`collapsed`/`onToggleCollapsed`
  * are owned by `AppShell` so the content column's offset can track it).
  * Below `lg` — where collapsing to icons doesn't help on a phone-width
- * screen — it's always full-width and behaves as a slim top bar +
- * off-canvas drawer instead; the collapse toggle only renders at `lg`.
+ * screen — it's always full-width and behaves as an off-canvas drawer
+ * instead, opened from `AppHeader`'s hamburger button; `mobileOpen`/
+ * `onCloseMobile` are owned by `AppShell` too, so the header and the
+ * sidebar agree on the drawer's state regardless of which one changes
+ * it. (Search used to live inside this sidebar; it's now in `AppHeader`
+ * instead, reachable at every breakpoint without opening this drawer
+ * or expanding out of the collapsed rail first.)
  *
  * The model list covers every 911 and Boxster/Cayman generation (see
  * `data/models/roadmap.ts`), not just the ones with a real dashboard —
@@ -60,12 +51,16 @@ export function SiteSidebar({
   groups,
   collapsed,
   onToggleCollapsed,
+  mobileOpen,
+  onCloseMobile,
 }: {
   groups: PlatformWithTrims[];
   collapsed: boolean;
   onToggleCollapsed: () => void;
+  mobileOpen: boolean;
+  onCloseMobile: () => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const close = onCloseMobile;
   // Explicit user choices only — undefined/missing means "use the
   // default for this render" rather than a stored true/false. Lines
   // default open; a platform defaults open only when the current route
@@ -81,36 +76,6 @@ export function SiteSidebar({
     Record<string, boolean>
   >({});
   const pathname = usePathname();
-  const close = () => setOpen(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const [focusRequestedAt, setFocusRequestedAt] = useState(0);
-
-  const focusSearch = useCallback(() => {
-    setOpen(true); // reveal the off-canvas drawer at mobile widths
-    if (collapsed) onToggleCollapsed(); // expand out of the icon rail at lg
-    setFocusRequestedAt(Date.now());
-  }, [collapsed, onToggleCollapsed]);
-
-  // Cmd/Ctrl+K jumps to search from anywhere, expanding the sidebar
-  // first if it's collapsed to an icon rail.
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        focusSearch();
-      }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [focusSearch]);
-
-  // Actually focus once a request lands — re-runs when `collapsed` flips
-  // too, so a request made while collapsed still lands after the
-  // search input mounts.
-  useEffect(() => {
-    if (focusRequestedAt === 0) return;
-    searchInputRef.current?.focus();
-  }, [focusRequestedAt, collapsed]);
 
   const activePlatformSlug = groups.find(({ platform }) =>
     pathname.startsWith(`/models/${platform.slug}`)
@@ -127,9 +92,9 @@ export function SiteSidebar({
 
   // Escape to close, and lock body scroll while the mobile drawer is open.
   useEffect(() => {
-    if (!open) return;
+    if (!mobileOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") onCloseMobile();
     };
     document.addEventListener("keydown", onKeyDown);
     const prevOverflow = document.body.style.overflow;
@@ -138,7 +103,7 @@ export function SiteSidebar({
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open]);
+  }, [mobileOpen, onCloseMobile]);
 
   const navLinkClass = (active: boolean) =>
     `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
@@ -151,32 +116,12 @@ export function SiteSidebar({
 
   return (
     <>
-      {/* Mobile top bar — the sidebar itself is off-canvas below `lg` */}
-      <div className="glass sticky top-0 z-30 flex items-center justify-between border-b border-line px-4 py-3 lg:hidden">
-        <Link
-          href="/"
-          className="text-stretch font-display text-lg font-semibold tracking-tight text-ink"
-        >
-          STAT<span className="text-steel">WERKS</span>
-        </Link>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-expanded={open}
-          aria-controls="site-sidebar"
-          aria-label="Open navigation"
-          className="rounded-lg p-2 text-steel transition-colors hover:bg-surface-recessed hover:text-ink"
-        >
-          <Menu size={20} strokeWidth={1.75} />
-        </button>
-      </div>
-
       {/* Mobile backdrop */}
       <div
         aria-hidden
         onClick={close}
         className={`fixed inset-0 z-40 bg-ink/30 backdrop-blur-[2px] transition-opacity duration-300 lg:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
+          mobileOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
 
@@ -184,7 +129,7 @@ export function SiteSidebar({
       <div
         id="site-sidebar"
         className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-line bg-surface transition-transform duration-300 ease-out lg:translate-x-0 lg:shadow-none ${
-          open ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+          mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         } ${collapsed ? "lg:w-20" : "lg:w-72"}`}
       >
         <div
@@ -239,21 +184,6 @@ export function SiteSidebar({
             />
             <span className={collapsed ? "lg:hidden" : ""}>All models</span>
           </Link>
-
-          <div className={`mt-3 ${collapsed ? "lg:hidden" : ""}`}>
-            <SidebarSearch ref={searchInputRef} onNavigate={close} />
-          </div>
-          {collapsed ? (
-            <button
-              type="button"
-              onClick={focusSearch}
-              title="Search (⌘K)"
-              aria-label="Search models and trims"
-              className="mt-1 hidden w-full items-center justify-center rounded-xl px-3 py-2.5 text-steel transition-colors hover:bg-surface-recessed hover:text-ink lg:flex"
-            >
-              <Search size={17} strokeWidth={1.75} aria-hidden />
-            </button>
-          ) : null}
 
           <div className={collapsed ? "lg:hidden" : ""}>
             <p className="label-mono mb-1.5 mt-6 px-3 text-steel-dim">

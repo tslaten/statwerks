@@ -1,5 +1,6 @@
 import { getAllPlatforms, getAllTrims, getPlatformBySlug } from "./index";
 import { roadmap } from "./roadmap";
+import { powerWithoutRpm } from "@/lib/format";
 
 export type SearchResult =
   | { kind: "platform"; label: string; subtitle: string; href: string }
@@ -32,7 +33,9 @@ export function buildSearchIndex(): SearchResult[] {
     results.push({
       kind: "trim",
       label: `${platform.chassisCode} ${trim.name}`,
-      subtitle: trim.overview.power,
+      // Stripped of "@ N,NNN rpm" — the autosuggest row is a tight,
+      // single-line space, same reasoning as the sidebar's trim rows.
+      subtitle: powerWithoutRpm(trim.overview.power),
       href: `/models/${platform.slug}/${trim.slug}`,
     });
   }
