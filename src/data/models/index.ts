@@ -6,6 +6,7 @@ import { carrera996 } from "./platforms/996-carrera";
 import { cayman718 } from "./platforms/718-cayman";
 import { carrera9911S } from "./trims/991-1-carrera-s";
 import { cayman981S } from "./trims/981-cayman-s";
+import { cayman981Base } from "./trims/981-cayman-base";
 import { carrera9972S } from "./trims/997-2-carrera-s";
 import { gt39972Trim } from "./trims/997-2-gt3";
 import { carrera996Base } from "./trims/996-carrera-base";
@@ -38,6 +39,7 @@ export const platforms: Platform[] = [
  */
 export const trims: Trim[] = [
   cayman981S,
+  cayman981Base,
   carrera9972S,
   carrera9911S,
   gt39972Trim,
