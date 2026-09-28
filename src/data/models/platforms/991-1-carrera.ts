@@ -8,6 +8,14 @@ import type { Platform } from "../types";
  * scoring on this generation — see that issue's detail for the
  * two-sided treatment) rather than picking a side, and that nuance is
  * preserved here rather than flattened into a confident one-way claim.
+ *
+ * Updated September 2026: added a platform-level `image` — a
+ * user-supplied illustration of a silver 991.1 Carrera beside a red
+ * 991.1 GT3, used as-is, shown on the platform hub page and
+ * platform-level cards. Separate from the Carrera S trim's own `image`,
+ * so the two can change independently. Kept as the supplied WebP
+ * rather than converted to PNG like the other platform images — it's
+ * a fraction of the size, and next/image serves it either way.
  */
 export const carrera9911: Platform = {
   slug: "991-1-carrera",
@@ -17,6 +25,11 @@ export const carrera9911: Platform = {
   teaser:
     "An all-new platform over the 997 — more refined, more modern, and the last naturally aspirated 911 generation before turbocharging.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/991-1-carrera/platform.webp",
+    alt: "A silver 991.1 Carrera and a red 991.1 GT3 parked side by side on a rooftop under a blue sky",
+    fit: "cover",
+  },
 
   overview: {
     years: "2012–2016",
