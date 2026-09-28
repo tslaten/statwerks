@@ -32,7 +32,10 @@ import type { Trim } from "../types";
  * 2025) is above what most pre-facelift cars are listed for and wasn't
  * independently re-verified.
  *
- * No vehicle image yet — renders the standard placeholder.
+ * Vehicle image: a user-supplied illustration (silver, side profile,
+ * in front of a modern house), used as-is at `fit: "cover"` like the
+ * other trim images. Kept as the supplied WebP rather than converted
+ * to PNG.
  */
 export const taycanCrossTurismo4S: Trim = {
   slug: "4s",
@@ -42,6 +45,11 @@ export const taycanCrossTurismo4S: Trim = {
   teaser:
     "The volume Cross Turismo — within a few tenths of the Turbo in real driving, for far less money, with the big battery as standard.",
   contentStatus: "reviewed",
+  image: {
+    src: "/vehicles/taycan-cross-turismo/4s.webp",
+    alt: "Taycan 4S Cross Turismo, silver, side profile, parked in front of a modern house",
+    fit: "cover",
+  },
 
   overview: {
     engine: "Dual permanent-magnet synchronous motors (one per axle)",
