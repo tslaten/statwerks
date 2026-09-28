@@ -1,9 +1,11 @@
 import {
+  BatteryCharging,
   Calendar,
   Car,
   Cog,
   Gauge,
   Hash,
+  Route,
   Settings2,
   Timer,
   Weight,
@@ -26,6 +28,10 @@ const ICONS_BY_LABEL: Record<string, LucideIcon> = {
   "0–60 mph": Timer,
   Transmission: Settings2,
   "Curb weight": Weight,
+  // EV-specific labels (Taycan)
+  Motors: Cog,
+  Battery: BatteryCharging,
+  "Range (EPA)": Route,
 };
 
 export function iconForFact(label: string): LucideIcon {

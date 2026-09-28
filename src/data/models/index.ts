@@ -4,6 +4,7 @@ import { carrera9972 } from "./platforms/997-2-carrera";
 import { gt39972 } from "./platforms/997-2-gt3";
 import { carrera996 } from "./platforms/996-carrera";
 import { cayman718 } from "./platforms/718-cayman";
+import { taycanCrossTurismo } from "./platforms/taycan-cross-turismo";
 import { carrera9911S } from "./trims/991-1-carrera-s";
 import { cayman981S } from "./trims/981-cayman-s";
 import { cayman981Base } from "./trims/981-cayman-base";
@@ -12,6 +13,7 @@ import { gt39972Trim } from "./trims/997-2-gt3";
 import { carrera996Base } from "./trims/996-carrera-base";
 import { cayman718S } from "./trims/718-cayman-s";
 import { cayman718Base } from "./trims/718-cayman-base";
+import { taycanCrossTurismo4S } from "./trims/taycan-cross-turismo-4s";
 import {
   SEVERITY_ORDER,
   type BuyingChecklist,
@@ -31,6 +33,7 @@ export const platforms: Platform[] = [
   gt39972,
   carrera996,
   cayman718,
+  taycanCrossTurismo,
 ];
 
 /**
@@ -46,6 +49,7 @@ export const trims: Trim[] = [
   carrera996Base,
   cayman718S,
   cayman718Base,
+  taycanCrossTurismo4S,
 ];
 
 export function getAllPlatforms(): Platform[] {

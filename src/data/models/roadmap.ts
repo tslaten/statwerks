@@ -6,14 +6,14 @@
  * against `Platform.slug` in `./index.ts`); generations without one
  * render as a disabled "Coming soon" row instead of being omitted.
  *
- * Deliberately scoped to the two model lines this site already covers
- * (911, and Cayman/Boxster) rather than every Porsche model ever made
- * (Cayenne, Macan, Panamera, Taycan, 918 Spyder, Carrera GT, 959,
- * 924/944/968, 928, ...) — those are different ownership categories
- * with a completely different known-issues profile than the sports
- * cars this site is built around, and nothing here suggests the site
- * is expanding into SUVs/sedans/EVs. If that scope ever changes, this
- * is the file to extend.
+ * Scoped to the model lines this site actually covers — 911,
+ * Cayman/Boxster, and (since September 2026) Taycan — rather than every
+ * Porsche model ever made (Cayenne, Macan, Panamera, 918 Spyder,
+ * Carrera GT, 959, 924/944/968, 928, ...). Taycan was the first step
+ * outside the sports-car lines, added on request with the Cross Turismo;
+ * its EV known-issues profile is completely different from the rest of
+ * the site. Add another model line here (and to `MODEL_LINES` in
+ * `site-sidebar.tsx`) if the scope widens again.
  *
  * A generation can map to more than one live platform — e.g. 997.2
  * covers both "997.2 Carrera" and "997.2 GT3" as separate platforms
@@ -28,7 +28,7 @@
  * for precision is lower than for a published dashboard's numbers.
  */
 
-export type ModelLine = "911" | "Cayman / Boxster";
+export type ModelLine = "911" | "Cayman / Boxster" | "Taycan";
 
 export interface RoadmapGeneration {
   /** Generation label shown in the sidebar, e.g. "993" or "996". */
@@ -79,4 +79,16 @@ export const roadmap: RoadmapGeneration[] = [
     platformSlugs: ["718-cayman"],
   },
   { label: "718 Boxster", years: "2016–present", modelLine: "Cayman / Boxster" },
+
+  // Taycan, chronological. Sedan and Cross Turismo are listed separately
+  // (different bodies, suspension, and pricing); Sport Turismo is folded
+  // into the sedan row until it has its own platform.
+  { label: "Taycan (J1.1)", years: "2020–2024", modelLine: "Taycan" },
+  {
+    label: "Taycan Cross Turismo (J1.1)",
+    years: "2021–2024",
+    modelLine: "Taycan",
+    platformSlugs: ["taycan-cross-turismo"],
+  },
+  { label: "Taycan (J1.2)", years: "2025–present", modelLine: "Taycan" },
 ];

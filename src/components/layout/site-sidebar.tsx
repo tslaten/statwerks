@@ -21,7 +21,7 @@ export interface PlatformWithTrims {
   trims: Trim[];
 }
 
-const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster"];
+const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster", "Taycan"];
 
 /**
  * Persistent dashboard-style left nav (logo, primary links, the full
@@ -38,12 +38,12 @@ const MODEL_LINES: ModelLine[] = ["911", "Cayman / Boxster"];
  * instead, reachable at every breakpoint without opening this drawer
  * or expanding out of the collapsed rail first.)
  *
- * The model list covers every 911 and Boxster/Cayman generation (see
+ * The model list covers every 911, Boxster/Cayman, and Taycan generation (see
  * `data/models/roadmap.ts`), not just the ones with a real dashboard —
  * generations without one show as a disabled "Coming soon" row rather
  * than being left out, so the list reads as a full lineup/roadmap, not
  * just today's catalog. It's organized as two levels of accordion —
- * model line (911 / Cayman-Boxster), then each generation within it —
+ * model line (911 / Cayman-Boxster / Taycan), then each generation within it —
  * so the list stays navigable as more generations get added, rather
  * than one long always-expanded wall of trims.
  */
